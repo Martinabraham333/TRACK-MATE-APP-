@@ -93,14 +93,14 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "+",
                   ontap: () {
                     signList.add("+");
-                
+
                     setState(() {
                       if (_displayController.text.isEmpty) {
                         tempvar = double.parse(_resultController.text);
-                      } else if (_displayController.text[_displayController.text.length - 2] ==
+                      } else if (_displayController
+                              .text[_displayController.text.length - 2] ==
                           "=") {
                         _displayController.clear();
-                        
                       } else {
                         if (signList.length == 1) {
                           tempvar =
@@ -143,10 +143,10 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                     setState(() {
                       if (_displayController.text.isEmpty) {
                         tempvar = double.parse(_resultController.text);
-                      } else if (_displayController.text[_displayController.text.length - 2] ==
+                      } else if (_displayController
+                              .text[_displayController.text.length - 2] ==
                           "=") {
                         _displayController.clear();
-                        
                       } else {
                         if (signList.length == 1) {
                           tempvar =
@@ -191,10 +191,10 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                     setState(() {
                       if (_displayController.text.isEmpty) {
                         tempvar = double.parse(_resultController.text);
-                      } else if (_displayController.text[_displayController.text.length - 2] ==
+                      } else if (_displayController
+                              .text[_displayController.text.length - 2] ==
                           "=") {
                         _displayController.clear();
-                        
                       } else {
                         if (signList.length == 1) {
                           tempvar =
@@ -238,10 +238,10 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                     setState(() {
                       if (_displayController.text.isEmpty) {
                         tempvar = double.parse(_resultController.text);
-                      } else if (_displayController.text[_displayController.text.length - 2] ==
+                      } else if (_displayController
+                              .text[_displayController.text.length - 2] ==
                           "=") {
                         _displayController.clear();
-                        
                       } else {
                         if (signList.length == 1) {
                           tempvar =
@@ -291,6 +291,13 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "1",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
+
                       _resultController.text = "${_resultController.text}1";
                     });
                   },
@@ -299,6 +306,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "2",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}2";
                     });
                   },
@@ -307,6 +320,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "3",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}3";
                     });
                   },
@@ -315,6 +334,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "4",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}4";
                     });
                   },
@@ -331,6 +356,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "5",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}5";
                     });
                   },
@@ -339,6 +370,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "6",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}6";
                     });
                   },
@@ -347,6 +384,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "7",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}7";
                     });
                   },
@@ -355,6 +398,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "8",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}8";
                     });
                   },
@@ -371,6 +420,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "9",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}9";
                     });
                   },
@@ -379,6 +434,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: "0",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 && _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}0";
                     });
                   },
@@ -387,6 +448,12 @@ class _CalculatorWidgetState extends State<CalculatorWidget> {
                   title: ".",
                   ontap: () {
                     setState(() {
+                      if (_displayController.text.length>2 &&  _displayController
+                              .text[_displayController.text.length - 2] ==
+                          "=") {
+                        _displayController.clear();
+                        _resultController.clear();
+                      }
                       _resultController.text = "${_resultController.text}.";
                     });
                   },
