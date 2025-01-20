@@ -40,7 +40,11 @@ dependencies:
   freezed_annotation: ^2.4.4
   build_runner: ^2.4.11
   sqflite: ^2.3.3+1
-  intl: ^0.19.0
+  intl: ^0.20.1
+  fl_chart: ^0.70.1
+  pie_chart: ^5.4.0
+  flutter_launcher_icons: ^0.14.3
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +55,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -69,6 +73,8 @@ flutter:
     - assets/images/warning.png
     - assets/images/error.png
     - assets/images/success.png
+    - assets/images/logo.png
+    - assets/images/black.jpg
   
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -96,3 +102,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"

@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+
 import 'package:track_mate/DATABASE.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/MODELS/expense_model.dart';
 
@@ -12,7 +12,7 @@ class ExpenseRepository {
 
   fetchExpense() async {
     final resp = await db.rawQuery(
-        'SELECT * FROM EXPENSE e INNER JOIN CATEGORY c ON e.CATEG_ID==C.CATEG_ID ');
+        'SELECT * FROM EXPENSE e INNER JOIN CATEGORY c ON e.CATEG_ID==C.CATEG_ID order by DATE desc');
     print("Response After fetching Expense : $resp");
     final List<ExpenseModel> data = [];
     for (var element in resp) {

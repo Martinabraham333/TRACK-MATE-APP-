@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final double widthSize;
   final bool? readonly;
   final VoidCallback? ontap;
+  final VoidCallback? textFieldOnTap;
   const CustomTextField({
     super.key,
     required this.controller,
@@ -17,6 +18,7 @@ class CustomTextField extends StatelessWidget {
     this.icon,
     this.readonly,
     this.ontap,
+    this.textFieldOnTap,
   });
 
   @override
@@ -35,6 +37,7 @@ class CustomTextField extends StatelessWidget {
             left: width * 0.03,
           ),
           child: TextField(
+            onTap: textFieldOnTap,
             readOnly: readonly ?? false,
             cursorColor: SecondaryColor,
             controller: controller,

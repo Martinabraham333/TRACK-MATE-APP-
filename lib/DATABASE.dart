@@ -14,6 +14,14 @@ initDatabase() async {
 
         await db.execute(
             'CREATE TABLE EXPENSE (EXPENSE_ID INTEGER PRIMARY KEY, AMOUNT REAL, DATE TEXT, CATEG_ID INTEGER, FOREIGN KEY(CATEG_ID) REFERENCES CATEGORY(CATEG_ID) ON DELETE CASCADE)');
+      
+        await db.execute(
+            'CREATE TABLE BUDGET ('
+            'BUDGET_ID INTEGER PRIMARY KEY, '
+            'CATEG_ID INTEGER, '
+            'BUDGET_AMOUNT REAL, '
+            'DATE TEXT, ' 
+            'FOREIGN KEY(CATEG_ID) REFERENCES CATEGORY(CATEG_ID) ON DELETE CASCADE)');
       },
       onOpen: (db) async {
     

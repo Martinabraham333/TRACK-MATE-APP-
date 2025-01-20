@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:track_mate/CONSTANTS.dart';
-import 'package:track_mate/EXPENSE%20TRACKING/SCREENS/Ai_Chat_Page.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/SCREENS/budget_page.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/SCREENS/category_page.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/SCREENS/expense_page.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/SCREENS/home_page.dart';
@@ -9,12 +9,13 @@ import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custom_text.dart';
 
 class CustomeAppBar extends StatelessWidget {
   final String title;
-  CustomeAppBar({super.key, required this.title});
+  final VoidCallback menuOntap;
+  CustomeAppBar({super.key, required this.title, required this.menuOntap});
   List contentList = [
     ['Home', Icons.home, const Home_Page()],
-    ['Expense', Icons.payments,  ExpensePage()],
+    ['Expense', Icons.payments, ExpensePage()],
     ['Category', Icons.category, CreateCategory()],
-    ['Ai Chat', Icons.chat, const Ai_Chat_Page()]
+    ['Budget', Icons.attach_money, BudgetPage()]
   ];
   @override
   Widget build(BuildContext context) {
@@ -29,12 +30,24 @@ class CustomeAppBar extends StatelessWidget {
               bottomRight: Radius.circular(20))),
       child: Column(
         children: [
-          Center(
-            child: CustomeText(
-                text: title,
-                fontSize: width * 0.06,
-                color: SecondaryColor,
-                fontWeight: FontWeight.bold),
+          SizedBox(
+            height: height * 0.01,
+          ),
+          Row(
+            children: [
+              TextButton(
+                  onPressed: menuOntap,
+                  child: Icon(
+                    Icons.menu,
+                    color: SecondaryColor,
+                    size: width * 0.06,
+                  )),
+              CustomeText(
+                  text: title,
+                  fontSize: width * 0.06,
+                  color: SecondaryColor,
+                  fontWeight: FontWeight.bold),
+            ],
           ),
           const SizedBox(
             height: 10,
@@ -56,10 +69,11 @@ class CustomeAppBar extends StatelessWidget {
                       Icon(
                         item[1],
                         color: SecondaryColor,
+                        size: width * 0.06,
                       ),
                       CustomeText(
                         text: item[0],
-                        fontSize: width * 0.03,
+                        fontSize: width * 0.04,
                         color: SecondaryColor,
                         fontWeight: FontWeight.bold,
                       )

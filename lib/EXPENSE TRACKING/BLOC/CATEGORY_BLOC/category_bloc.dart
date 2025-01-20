@@ -1,8 +1,8 @@
-import 'dart:ui';
+
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:track_mate/CONSTANTS.dart';
+
 import 'package:track_mate/EXPENSE%20TRACKING/MODELS/category_model.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/REPOSITORIES/category_repository.dart';
 
@@ -12,7 +12,7 @@ part 'category_bloc.freezed.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryRepository repository;
-  CategoryBloc(this.repository) : super(Initial()) {
+  CategoryBloc(this.repository) : super(InitialCategory()) {
     on<AddCategory>(_addCategory);
     on<FetchCategory>(_fetchCategory);
     on<DeleteCategory>(_deleteCategory);
@@ -22,52 +22,60 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   _addCategory(AddCategory event, Emitter<CategoryState> emit) async {
     emit(CategoryState.loading());
     try {
-      await repository.addCategory(event.categoryName);
-      final category = await repository.fetchCategory();
-      emit(CategoryState.loaded(category, "Category Added Successfully",
-          "SUCCESS...!!!", successColor, pathSuccess));
+      
+      if (event.categoryName == '') {
+        emit(CategoryState.error("Category Name Cannot be empty",
+         ));
+        print("Category Name Cannot be empty");
+        
+      } else {
+        await repository.addCategory(event.categoryName);
+        final category = await repository.fetchCategory();
+        emit(CategoryState.loaded(category, "Category Added Successfully",
+           ));
+      }
     } catch (e) {
-      emit( CategoryState.error(
-          "An error occurred while adding the category", "ERROR...!!!", errorColor, pathError));
+      emit(CategoryState.error("An error occurred while adding the category",
+       ));
     }
   }
 
   _fetchCategory(FetchCategory event, Emitter<CategoryState> emit) async {
-        emit(CategoryState.loading());
+    emit(CategoryState.loading());
     try {
       final category = await repository.fetchCategory();
-      emit(CategoryState.loaded(category, "", "", PrimaryColor, ''));
+      emit(CategoryState.loaded(category, "",));
     } catch (e) {
-      emit( CategoryState.error(
-          "An error occurred while fetching the category", "ERROR...!!!", errorColor, pathError));
+      emit(CategoryState.error("An error occurred while fetching the category",
+       ));
     }
   }
 
   _deleteCategory(DeleteCategory event, Emitter<CategoryState> emit) async {
-        emit(CategoryState.loading());
+    emit(CategoryState.loading());
     try {
       await repository.deleteCategory(event.categoryId);
 
       final category = await repository.fetchCategory();
       emit(CategoryState.loaded(category, "Category Deleted Successfully",
-          "SUCCESS...!!!", successColor, pathSuccess));
+         ));
     } catch (e) {
-      emit( CategoryState.error(
-          "An error occurred while deleting the category", "ERROR...!!!", errorColor, pathError));
+      emit(CategoryState.error("An error occurred while deleting the category",
+         ));
     }
   }
 
   _updateCategory(UpdateCategory event, Emitter<CategoryState> emit) async {
-        emit(CategoryState.loading());
+    emit(CategoryState.loading());
     try {
       await repository.updateCategory(event.categoryId, event.categoryName);
 
       final category = await repository.fetchCategory();
       emit(CategoryState.loaded(category, "Category Updated Successfully",
-          "SUCCESS...!!!", successColor, pathSuccess));
+         ));
     } catch (e) {
-      emit( CategoryState.error(
-          "An error occurred while updating the category", "ERROR...!!!", errorColor, pathError));
+      emit(CategoryState.error("An error occurred while updating the category",
+        ));
     }
   }
 }

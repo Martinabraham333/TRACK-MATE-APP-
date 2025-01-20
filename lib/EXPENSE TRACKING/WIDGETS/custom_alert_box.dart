@@ -36,7 +36,7 @@ class CustomAlertBox extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     ontap(DataList[index]);
-                            Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: Card(
                     color: PrimaryColor,
@@ -77,4 +77,54 @@ class CustomAlertBox extends StatelessWidget {
       ],
     );
   }
+}
+
+alertBoxMessage(context, message) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Material(
+            color: PrimaryColor,
+            elevation: 6.0,
+            shadowColor: Colors.grey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(18),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 19.0,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "Close",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

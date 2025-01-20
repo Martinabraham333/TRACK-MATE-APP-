@@ -96,6 +96,9 @@ class _$ExpenseEventCopyWithImpl<$Res, $Val extends ExpenseEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -116,6 +119,8 @@ class __$$AddExpenseImplCopyWithImpl<$Res>
       _$AddExpenseImpl _value, $Res Function(_$AddExpenseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -173,7 +178,9 @@ class _$AddExpenseImpl implements AddExpense {
       const DeepCollectionEquality().hash(category),
       const DeepCollectionEquality().hash(category_id));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddExpenseImplCopyWith<_$AddExpenseImpl> get copyWith =>
@@ -274,7 +281,10 @@ abstract class AddExpense implements ExpenseEvent {
   dynamic get date;
   dynamic get category;
   dynamic get category_id;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddExpenseImplCopyWith<_$AddExpenseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -296,6 +306,8 @@ class __$$FetchExpenseImplCopyWithImpl<$Res>
       _$FetchExpenseImpl _value, $Res Function(_$FetchExpenseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -339,7 +351,9 @@ class _$FetchExpenseImpl implements FetchExpense {
       const DeepCollectionEquality().hash(month),
       const DeepCollectionEquality().hash(day));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FetchExpenseImplCopyWith<_$FetchExpenseImpl> get copyWith =>
@@ -438,7 +452,10 @@ abstract class FetchExpense implements ExpenseEvent {
 
   dynamic get month;
   dynamic get day;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FetchExpenseImplCopyWith<_$FetchExpenseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -461,6 +478,8 @@ class __$$UpdateExpenseImplCopyWithImpl<$Res>
       _$UpdateExpenseImpl _value, $Res Function(_$UpdateExpenseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -519,7 +538,9 @@ class _$UpdateExpenseImpl implements UpdateExpense {
       const DeepCollectionEquality().hash(expense_Id),
       const DeepCollectionEquality().hash(category_id));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateExpenseImplCopyWith<_$UpdateExpenseImpl> get copyWith =>
@@ -623,7 +644,10 @@ abstract class UpdateExpense implements ExpenseEvent {
   dynamic get date;
   dynamic get expense_Id;
   dynamic get category_id;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateExpenseImplCopyWith<_$UpdateExpenseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -645,6 +669,8 @@ class __$$DeleteExpenseImplCopyWithImpl<$Res>
       _$DeleteExpenseImpl _value, $Res Function(_$DeleteExpenseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -682,7 +708,9 @@ class _$DeleteExpenseImpl implements DeleteExpense {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(expense_Id));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DeleteExpenseImplCopyWith<_$DeleteExpenseImpl> get copyWith =>
@@ -779,7 +807,10 @@ abstract class DeleteExpense implements ExpenseEvent {
   const factory DeleteExpense(final dynamic expense_Id) = _$DeleteExpenseImpl;
 
   dynamic get expense_Id;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeleteExpenseImplCopyWith<_$DeleteExpenseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -788,8 +819,15 @@ abstract class DeleteExpense implements ExpenseEvent {
 mixin _$ExpenseState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)
+    required TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)
         loaded,
     required TResult Function() loading,
     required TResult Function(dynamic msg) error,
@@ -798,8 +836,15 @@ mixin _$ExpenseState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult? Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(dynamic msg)? error,
@@ -808,8 +853,15 @@ mixin _$ExpenseState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult Function()? loading,
     TResult Function(dynamic msg)? error,
@@ -822,7 +874,7 @@ mixin _$ExpenseState {
     required TResult Function(ExpenseLoaded value) loaded,
     required TResult Function(ExpenseLoading value) loading,
     required TResult Function(ExpenseError value) error,
-    required TResult Function(_Initial value) initial,
+    required TResult Function(InitialExpense value) initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -830,7 +882,7 @@ mixin _$ExpenseState {
     TResult? Function(ExpenseLoaded value)? loaded,
     TResult? Function(ExpenseLoading value)? loading,
     TResult? Function(ExpenseError value)? error,
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(InitialExpense value)? initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -838,7 +890,7 @@ mixin _$ExpenseState {
     TResult Function(ExpenseLoaded value)? loaded,
     TResult Function(ExpenseLoading value)? loading,
     TResult Function(ExpenseError value)? error,
-    TResult Function(_Initial value)? initial,
+    TResult Function(InitialExpense value)? initial,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -860,6 +912,9 @@ class _$ExpenseStateCopyWithImpl<$Res, $Val extends ExpenseState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -870,9 +925,13 @@ abstract class _$$ExpenseLoadedImplCopyWith<$Res> {
   @useResult
   $Res call(
       {dynamic msg,
-      List<ExpenseModel> ExpenseList,
+      dynamic ExpenseList,
       dynamic monthExpense,
-      dynamic dayExpense});
+      dynamic dayExpense,
+      dynamic categoryExpense,
+      dynamic averageExpense,
+      dynamic predictedExpense,
+      dynamic eachDayTotalExpenseList});
 }
 
 /// @nodoc
@@ -883,22 +942,31 @@ class __$$ExpenseLoadedImplCopyWithImpl<$Res>
       _$ExpenseLoadedImpl _value, $Res Function(_$ExpenseLoadedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? msg = freezed,
-    Object? ExpenseList = null,
+    Object? ExpenseList = freezed,
     Object? monthExpense = freezed,
     Object? dayExpense = freezed,
+    Object? categoryExpense = freezed,
+    Object? averageExpense = freezed,
+    Object? predictedExpense = freezed,
+    Object? eachDayTotalExpenseList = freezed,
   }) {
     return _then(_$ExpenseLoadedImpl(
       freezed == msg ? _value.msg! : msg,
-      null == ExpenseList
-          ? _value._ExpenseList
-          : ExpenseList // ignore: cast_nullable_to_non_nullable
-              as List<ExpenseModel>,
+      freezed == ExpenseList ? _value.ExpenseList! : ExpenseList,
       freezed == monthExpense ? _value.monthExpense! : monthExpense,
       freezed == dayExpense ? _value.dayExpense! : dayExpense,
+      freezed == categoryExpense ? _value.categoryExpense! : categoryExpense,
+      freezed == averageExpense ? _value.averageExpense! : averageExpense,
+      freezed == predictedExpense ? _value.predictedExpense! : predictedExpense,
+      freezed == eachDayTotalExpenseList
+          ? _value.eachDayTotalExpenseList!
+          : eachDayTotalExpenseList,
     ));
   }
 }
@@ -906,28 +974,36 @@ class __$$ExpenseLoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ExpenseLoadedImpl implements ExpenseLoaded {
-  const _$ExpenseLoadedImpl(this.msg, final List<ExpenseModel> ExpenseList,
-      this.monthExpense, this.dayExpense)
-      : _ExpenseList = ExpenseList;
+  const _$ExpenseLoadedImpl(
+      this.msg,
+      this.ExpenseList,
+      this.monthExpense,
+      this.dayExpense,
+      this.categoryExpense,
+      this.averageExpense,
+      this.predictedExpense,
+      this.eachDayTotalExpenseList);
 
   @override
   final dynamic msg;
-  final List<ExpenseModel> _ExpenseList;
   @override
-  List<ExpenseModel> get ExpenseList {
-    if (_ExpenseList is EqualUnmodifiableListView) return _ExpenseList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ExpenseList);
-  }
-
+  final dynamic ExpenseList;
   @override
   final dynamic monthExpense;
   @override
   final dynamic dayExpense;
+  @override
+  final dynamic categoryExpense;
+  @override
+  final dynamic averageExpense;
+  @override
+  final dynamic predictedExpense;
+  @override
+  final dynamic eachDayTotalExpenseList;
 
   @override
   String toString() {
-    return 'ExpenseState.loaded(msg: $msg, ExpenseList: $ExpenseList, monthExpense: $monthExpense, dayExpense: $dayExpense)';
+    return 'ExpenseState.loaded(msg: $msg, ExpenseList: $ExpenseList, monthExpense: $monthExpense, dayExpense: $dayExpense, categoryExpense: $categoryExpense, averageExpense: $averageExpense, predictedExpense: $predictedExpense, eachDayTotalExpenseList: $eachDayTotalExpenseList)';
   }
 
   @override
@@ -937,22 +1013,36 @@ class _$ExpenseLoadedImpl implements ExpenseLoaded {
             other is _$ExpenseLoadedImpl &&
             const DeepCollectionEquality().equals(other.msg, msg) &&
             const DeepCollectionEquality()
-                .equals(other._ExpenseList, _ExpenseList) &&
+                .equals(other.ExpenseList, ExpenseList) &&
             const DeepCollectionEquality()
                 .equals(other.monthExpense, monthExpense) &&
             const DeepCollectionEquality()
-                .equals(other.dayExpense, dayExpense));
+                .equals(other.dayExpense, dayExpense) &&
+            const DeepCollectionEquality()
+                .equals(other.categoryExpense, categoryExpense) &&
+            const DeepCollectionEquality()
+                .equals(other.averageExpense, averageExpense) &&
+            const DeepCollectionEquality()
+                .equals(other.predictedExpense, predictedExpense) &&
+            const DeepCollectionEquality().equals(
+                other.eachDayTotalExpenseList, eachDayTotalExpenseList));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(msg),
-      const DeepCollectionEquality().hash(_ExpenseList),
+      const DeepCollectionEquality().hash(ExpenseList),
       const DeepCollectionEquality().hash(monthExpense),
-      const DeepCollectionEquality().hash(dayExpense));
+      const DeepCollectionEquality().hash(dayExpense),
+      const DeepCollectionEquality().hash(categoryExpense),
+      const DeepCollectionEquality().hash(averageExpense),
+      const DeepCollectionEquality().hash(predictedExpense),
+      const DeepCollectionEquality().hash(eachDayTotalExpenseList));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ExpenseLoadedImplCopyWith<_$ExpenseLoadedImpl> get copyWith =>
@@ -961,34 +1051,64 @@ class _$ExpenseLoadedImpl implements ExpenseLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)
+    required TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)
         loaded,
     required TResult Function() loading,
     required TResult Function(dynamic msg) error,
     required TResult Function() initial,
   }) {
-    return loaded(msg, ExpenseList, monthExpense, dayExpense);
+    return loaded(msg, ExpenseList, monthExpense, dayExpense, categoryExpense,
+        averageExpense, predictedExpense, eachDayTotalExpenseList);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult? Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(dynamic msg)? error,
     TResult? Function()? initial,
   }) {
-    return loaded?.call(msg, ExpenseList, monthExpense, dayExpense);
+    return loaded?.call(
+        msg,
+        ExpenseList,
+        monthExpense,
+        dayExpense,
+        categoryExpense,
+        averageExpense,
+        predictedExpense,
+        eachDayTotalExpenseList);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult Function()? loading,
     TResult Function(dynamic msg)? error,
@@ -996,7 +1116,8 @@ class _$ExpenseLoadedImpl implements ExpenseLoaded {
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(msg, ExpenseList, monthExpense, dayExpense);
+      return loaded(msg, ExpenseList, monthExpense, dayExpense, categoryExpense,
+          averageExpense, predictedExpense, eachDayTotalExpenseList);
     }
     return orElse();
   }
@@ -1007,7 +1128,7 @@ class _$ExpenseLoadedImpl implements ExpenseLoaded {
     required TResult Function(ExpenseLoaded value) loaded,
     required TResult Function(ExpenseLoading value) loading,
     required TResult Function(ExpenseError value) error,
-    required TResult Function(_Initial value) initial,
+    required TResult Function(InitialExpense value) initial,
   }) {
     return loaded(this);
   }
@@ -1018,7 +1139,7 @@ class _$ExpenseLoadedImpl implements ExpenseLoaded {
     TResult? Function(ExpenseLoaded value)? loaded,
     TResult? Function(ExpenseLoading value)? loading,
     TResult? Function(ExpenseError value)? error,
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(InitialExpense value)? initial,
   }) {
     return loaded?.call(this);
   }
@@ -1029,7 +1150,7 @@ class _$ExpenseLoadedImpl implements ExpenseLoaded {
     TResult Function(ExpenseLoaded value)? loaded,
     TResult Function(ExpenseLoading value)? loading,
     TResult Function(ExpenseError value)? error,
-    TResult Function(_Initial value)? initial,
+    TResult Function(InitialExpense value)? initial,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -1042,15 +1163,26 @@ class _$ExpenseLoadedImpl implements ExpenseLoaded {
 abstract class ExpenseLoaded implements ExpenseState {
   const factory ExpenseLoaded(
       final dynamic msg,
-      final List<ExpenseModel> ExpenseList,
+      final dynamic ExpenseList,
       final dynamic monthExpense,
-      final dynamic dayExpense) = _$ExpenseLoadedImpl;
+      final dynamic dayExpense,
+      final dynamic categoryExpense,
+      final dynamic averageExpense,
+      final dynamic predictedExpense,
+      final dynamic eachDayTotalExpenseList) = _$ExpenseLoadedImpl;
 
   dynamic get msg;
-  List<ExpenseModel> get ExpenseList;
+  dynamic get ExpenseList;
   dynamic get monthExpense;
   dynamic get dayExpense;
-  @JsonKey(ignore: true)
+  dynamic get categoryExpense;
+  dynamic get averageExpense;
+  dynamic get predictedExpense;
+  dynamic get eachDayTotalExpenseList;
+
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ExpenseLoadedImplCopyWith<_$ExpenseLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1069,6 +1201,9 @@ class __$$ExpenseLoadingImplCopyWithImpl<$Res>
   __$$ExpenseLoadingImplCopyWithImpl(
       _$ExpenseLoadingImpl _value, $Res Function(_$ExpenseLoadingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1093,8 +1228,15 @@ class _$ExpenseLoadingImpl implements ExpenseLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)
+    required TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)
         loaded,
     required TResult Function() loading,
     required TResult Function(dynamic msg) error,
@@ -1106,8 +1248,15 @@ class _$ExpenseLoadingImpl implements ExpenseLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult? Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(dynamic msg)? error,
@@ -1119,8 +1268,15 @@ class _$ExpenseLoadingImpl implements ExpenseLoading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult Function()? loading,
     TResult Function(dynamic msg)? error,
@@ -1139,7 +1295,7 @@ class _$ExpenseLoadingImpl implements ExpenseLoading {
     required TResult Function(ExpenseLoaded value) loaded,
     required TResult Function(ExpenseLoading value) loading,
     required TResult Function(ExpenseError value) error,
-    required TResult Function(_Initial value) initial,
+    required TResult Function(InitialExpense value) initial,
   }) {
     return loading(this);
   }
@@ -1150,7 +1306,7 @@ class _$ExpenseLoadingImpl implements ExpenseLoading {
     TResult? Function(ExpenseLoaded value)? loaded,
     TResult? Function(ExpenseLoading value)? loading,
     TResult? Function(ExpenseError value)? error,
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(InitialExpense value)? initial,
   }) {
     return loading?.call(this);
   }
@@ -1161,7 +1317,7 @@ class _$ExpenseLoadingImpl implements ExpenseLoading {
     TResult Function(ExpenseLoaded value)? loaded,
     TResult Function(ExpenseLoading value)? loading,
     TResult Function(ExpenseError value)? error,
-    TResult Function(_Initial value)? initial,
+    TResult Function(InitialExpense value)? initial,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1192,6 +1348,8 @@ class __$$ExpenseErrorImplCopyWithImpl<$Res>
       _$ExpenseErrorImpl _value, $Res Function(_$ExpenseErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1228,7 +1386,9 @@ class _$ExpenseErrorImpl implements ExpenseError {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(msg));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ExpenseErrorImplCopyWith<_$ExpenseErrorImpl> get copyWith =>
@@ -1237,8 +1397,15 @@ class _$ExpenseErrorImpl implements ExpenseError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)
+    required TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)
         loaded,
     required TResult Function() loading,
     required TResult Function(dynamic msg) error,
@@ -1250,8 +1417,15 @@ class _$ExpenseErrorImpl implements ExpenseError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult? Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(dynamic msg)? error,
@@ -1263,8 +1437,15 @@ class _$ExpenseErrorImpl implements ExpenseError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult Function()? loading,
     TResult Function(dynamic msg)? error,
@@ -1283,7 +1464,7 @@ class _$ExpenseErrorImpl implements ExpenseError {
     required TResult Function(ExpenseLoaded value) loaded,
     required TResult Function(ExpenseLoading value) loading,
     required TResult Function(ExpenseError value) error,
-    required TResult Function(_Initial value) initial,
+    required TResult Function(InitialExpense value) initial,
   }) {
     return error(this);
   }
@@ -1294,7 +1475,7 @@ class _$ExpenseErrorImpl implements ExpenseError {
     TResult? Function(ExpenseLoaded value)? loaded,
     TResult? Function(ExpenseLoading value)? loading,
     TResult? Function(ExpenseError value)? error,
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(InitialExpense value)? initial,
   }) {
     return error?.call(this);
   }
@@ -1305,7 +1486,7 @@ class _$ExpenseErrorImpl implements ExpenseError {
     TResult Function(ExpenseLoaded value)? loaded,
     TResult Function(ExpenseLoading value)? loading,
     TResult Function(ExpenseError value)? error,
-    TResult Function(_Initial value)? initial,
+    TResult Function(InitialExpense value)? initial,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1319,31 +1500,37 @@ abstract class ExpenseError implements ExpenseState {
   const factory ExpenseError(final dynamic msg) = _$ExpenseErrorImpl;
 
   dynamic get msg;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ExpenseErrorImplCopyWith<_$ExpenseErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+abstract class _$$InitialExpenseImplCopyWith<$Res> {
+  factory _$$InitialExpenseImplCopyWith(_$InitialExpenseImpl value,
+          $Res Function(_$InitialExpenseImpl) then) =
+      __$$InitialExpenseImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$ExpenseStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+class __$$InitialExpenseImplCopyWithImpl<$Res>
+    extends _$ExpenseStateCopyWithImpl<$Res, _$InitialExpenseImpl>
+    implements _$$InitialExpenseImplCopyWith<$Res> {
+  __$$InitialExpenseImplCopyWithImpl(
+      _$InitialExpenseImpl _value, $Res Function(_$InitialExpenseImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of ExpenseState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+class _$InitialExpenseImpl implements InitialExpense {
+  const _$InitialExpenseImpl();
 
   @override
   String toString() {
@@ -1353,7 +1540,7 @@ class _$InitialImpl implements _Initial {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType && other is _$InitialExpenseImpl);
   }
 
   @override
@@ -1362,8 +1549,15 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)
+    required TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)
         loaded,
     required TResult Function() loading,
     required TResult Function(dynamic msg) error,
@@ -1375,8 +1569,15 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult? Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(dynamic msg)? error,
@@ -1388,8 +1589,15 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(dynamic msg, List<ExpenseModel> ExpenseList,
-            dynamic monthExpense, dynamic dayExpense)?
+    TResult Function(
+            dynamic msg,
+            dynamic ExpenseList,
+            dynamic monthExpense,
+            dynamic dayExpense,
+            dynamic categoryExpense,
+            dynamic averageExpense,
+            dynamic predictedExpense,
+            dynamic eachDayTotalExpenseList)?
         loaded,
     TResult Function()? loading,
     TResult Function(dynamic msg)? error,
@@ -1408,7 +1616,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(ExpenseLoaded value) loaded,
     required TResult Function(ExpenseLoading value) loading,
     required TResult Function(ExpenseError value) error,
-    required TResult Function(_Initial value) initial,
+    required TResult Function(InitialExpense value) initial,
   }) {
     return initial(this);
   }
@@ -1419,7 +1627,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(ExpenseLoaded value)? loaded,
     TResult? Function(ExpenseLoading value)? loading,
     TResult? Function(ExpenseError value)? error,
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(InitialExpense value)? initial,
   }) {
     return initial?.call(this);
   }
@@ -1430,7 +1638,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(ExpenseLoaded value)? loaded,
     TResult Function(ExpenseLoading value)? loading,
     TResult Function(ExpenseError value)? error,
-    TResult Function(_Initial value)? initial,
+    TResult Function(InitialExpense value)? initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1440,6 +1648,6 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements ExpenseState {
-  const factory _Initial() = _$InitialImpl;
+abstract class InitialExpense implements ExpenseState {
+  const factory InitialExpense() = _$InitialExpenseImpl;
 }
