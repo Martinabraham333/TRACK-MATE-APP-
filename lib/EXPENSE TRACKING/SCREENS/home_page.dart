@@ -112,7 +112,7 @@ class _Home_PageState extends State<Home_Page> {
                             CustomeText(
                               text: "1. ",
                               fontSize: width * 0.05,
-                              color: Colors.grey,
+                              color: QuaternaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                             Container(
@@ -121,7 +121,7 @@ class _Home_PageState extends State<Home_Page> {
                                 text:
                                     "Navigate to Category Page and Create Category",
                                 fontSize: width * 0.05,
-                                color: Colors.grey,
+                                color: QuaternaryColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -137,7 +137,7 @@ class _Home_PageState extends State<Home_Page> {
                             CustomeText(
                               text: "2. ",
                               fontSize: width * 0.05,
-                              color: Colors.grey,
+                              color: QuaternaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                             Container(
@@ -146,7 +146,7 @@ class _Home_PageState extends State<Home_Page> {
                                 text:
                                     "Navigate to Expense Page and Create Expense",
                                 fontSize: width * 0.05,
-                                color: Colors.grey,
+                                color: QuaternaryColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -164,7 +164,7 @@ class _Home_PageState extends State<Home_Page> {
                             CustomeText(
                               text: "3. ",
                               fontSize: width * 0.05,
-                              color: Colors.grey,
+                              color: QuaternaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                             Container(
@@ -173,7 +173,7 @@ class _Home_PageState extends State<Home_Page> {
                                 text:
                                     "Navigate to Budget Page if you want to add budget for each category",
                                 fontSize: width * 0.05,
-                                color: Colors.grey,
+                                color: QuaternaryColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -187,7 +187,10 @@ class _Home_PageState extends State<Home_Page> {
                         Container(
                           height: height * 0.2,
                           width: width * 0.4,
-                          color: TertiaryColor,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: TertiaryColor,
+                          ),
                           child: Column(
                             children: [
                               SizedBox(
@@ -201,7 +204,7 @@ class _Home_PageState extends State<Home_Page> {
                                 height: height * 0.01,
                               ),
                               CustomeText(
-                                  text: "$monthExp Rs",
+                                  text: "₹$monthExp",
                                   fontSize: width * 0.04,
                                   color: Colors.red),
                               SizedBox(
@@ -216,7 +219,7 @@ class _Home_PageState extends State<Home_Page> {
                               ),
                               CustomeText(
                                   text:
-                                      "${predictedExpense.toStringAsFixed(2)} Rs",
+                                      "₹${predictedExpense.toStringAsFixed(2)}",
                                   fontSize: width * 0.04,
                                   color: Colors.red),
                             ],
@@ -225,7 +228,10 @@ class _Home_PageState extends State<Home_Page> {
                         Container(
                           height: height * 0.2,
                           width: width * 0.4,
-                          color: TertiaryColor,
+                           decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: TertiaryColor,
+                          ),
                           child: Column(
                             children: [
                               SizedBox(
@@ -239,7 +245,7 @@ class _Home_PageState extends State<Home_Page> {
                                 height: height * 0.01,
                               ),
                               CustomeText(
-                                  text: "$dayExp Rs",
+                                  text: " ₹$dayExp",
                                   fontSize: width * 0.04,
                                   color: Colors.red),
                               SizedBox(
@@ -254,7 +260,7 @@ class _Home_PageState extends State<Home_Page> {
                               ),
                               CustomeText(
                                   text:
-                                      "${averageExpense.toStringAsFixed(2)} Rs",
+                                      "₹${averageExpense.toStringAsFixed(2)}",
                                   fontSize: width * 0.04,
                                   color: Colors.red),
                             ],
@@ -307,9 +313,9 @@ class _Home_PageState extends State<Home_Page> {
                                 padding: EdgeInsets.all(width * 0.02),
                                 child: CustomeText(
                                     text:
-                                        "${categoryExpense[i]['AMOUNT'].toString()} Rs",
+                                        "₹${categoryExpense[i]['AMOUNT'].toString()}",
                                     fontSize: width * 0.05,
-                                    color: Colors.grey),
+                                    color: QuaternaryColor),
                               )
                             ],
                           )

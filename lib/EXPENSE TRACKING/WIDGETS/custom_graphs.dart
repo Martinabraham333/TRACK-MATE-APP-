@@ -64,7 +64,7 @@ class CustomGraphBudget extends StatelessWidget {
                   width: width * 0.04,
                 ),
                 CustomeText(
-                  text: "$budget Rs",
+                  text: "₹$budget",
                   fontSize: 15,
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class CustomGraphBudget extends StatelessWidget {
                   width: width * 0.04,
                 ),
                 CustomeText(
-                  text: "$expense Rs",
+                  text: "₹$expense",
                   fontSize: 15,
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class CustomGraphBudget extends StatelessWidget {
                     ? SizedBox(
                         width: width * 0.5,
                         child: CustomeText(
-                          text: "Exceeded by : ${expense - budget} Rs",
+                          text: "Exceeded by : ₹${expense - budget}",
                           fontSize: 15,
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
@@ -132,7 +132,7 @@ class CustomGraphBudget extends StatelessWidget {
                     : SizedBox(
                         width: width * 0.5,
                         child: CustomeText(
-                          text: "Bal : ${budget - expense} Rs",
+                          text: "Bal : ₹${budget - expense}",
                           fontSize: 15,
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,

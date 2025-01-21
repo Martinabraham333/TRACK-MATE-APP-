@@ -22,7 +22,6 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     try {
       final response = await repository.addExpense(
           event.expense, event.date, event.category_id);
-   
     } catch (e) {
       emit(const ExpenseState.error('Error while inserting expense'));
       print('Error while inserting expense');
@@ -67,8 +66,6 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     try {
       final response = await repository.updateExpense(
           event.expense_Id, event.expense, event.date, event.category_id);
-      
-     
     } catch (e) {
       emit(const ExpenseState.error('Error while updating expense'));
       print('Error while inserting expense');
@@ -79,7 +76,6 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     emit(const ExpenseState.loading());
     try {
       final response = await repository.deleteExpense(event.expense_Id);
-     
     } catch (e) {
       emit(const ExpenseState.error('Error while deleting expense'));
       print('Error while deleting expense $e');
@@ -158,13 +154,14 @@ calculatingAverageExpense(Expensedata, monthExpense) {
 
 calculatingPredictedExpense(averageExpense) {
   DateTime today = DateTime.now();
-
+  DateTime startOfToday = DateTime(today.year, today.month, today.day);
   // Get the last day of the current month
   DateTime endOfMonth = DateTime(today.year, today.month + 1, 0);
-
+  print("endOfMonth  $endOfMonth");
+  print("startOfToday  $startOfToday");
   // Calculate the difference in days
-  int daysDifference = endOfMonth.difference(today).inDays;
-
+  int daysDifference = endOfMonth.difference(startOfToday).inDays;
+  print("daysDifference  $daysDifference");
   return averageExpense * daysDifference;
 }
 

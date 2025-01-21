@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:track_mate/CONSTANTS.dart';
 import 'package:track_mate/DATABASE.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/BLOC/BUDGET_BLOC/budget_bloc.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/BLOC/CATEGORY_BLOC/category_bloc.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/BLOC/EXPENSE_BLOC/expense_bloc.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/SCREENS/expense_report.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custom_text.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/yes_or_no_widget.dart';
 
@@ -17,6 +20,14 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   @override
+  void initState() {
+    BlocProvider.of<ExpenseBloc>(context).add(ExpenseEvent.fetchExpense(
+        DateFormat.MMM().format(DateTime.now()),
+        DateFormat('MMM dd yyyy').format(DateTime.now())));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -26,7 +37,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: PrimaryColor,
             ),
             child: Column(
               children: [
@@ -78,43 +89,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ],
             ),
             onTap: () async {
-           bool? yesOrNo= await yes_or_no_alert(context, "Warning !!!", "Are you sure you want to clear all the data ?");
-           if (yesOrNo==true) {
-               await resetDatabase();
-              await initDatabase();
-              BlocProvider.of<ExpenseBloc>(context).add(
-                  ExpenseEvent.fetchExpense(
-                      DateFormat.MMM().format(DateTime.now()),
-                      DateFormat('MMM dd yyyy').format(DateTime.now())));
-             
-           } else {
-             
-           }
-           
+              bool? yesOrNo = await yes_or_no_alert(context, "Warning !!!",
+                  "Are you sure you want to clear all the data ?");
+              if (yesOrNo == true) {
+                await resetDatabase();
+                await initDatabase();
+                BlocProvider.of<ExpenseBloc>(context).add(
+                    ExpenseEvent.fetchExpense(
+                        DateFormat.MMM().format(DateTime.now()),
+                        DateFormat('MMM dd yyyy').format(DateTime.now())));
+
+                BlocProvider.of<CategoryBloc>(context)
+                    .add(const FetchCategory());
+                BlocProvider.of<BudgetBloc>(context)
+                    .add(BudgetEvent.fetchBudget());
+              } else {}
             },
           ),
-          ListTile(
-            title: Row(
-              children: [
-                Icon(
-                  Icons.settings,
-                  color: SecondaryColor,
-                  size: width * 0.05,
-                ),
-                SizedBox(
-                  width: width * 0.04,
-                ),
-                CustomeText(
-                  text: "settings",
-                  fontSize: width * 0.05,
-                  color: SecondaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ],
-            ),
-            onTap: () {},
-          ),
-        ],
+  ],
       ),
     );
   }

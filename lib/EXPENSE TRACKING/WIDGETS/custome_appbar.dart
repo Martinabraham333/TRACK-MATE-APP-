@@ -24,7 +24,7 @@ class CustomeAppBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-          color: PrimaryColor,
+          color:darkTheme? PrimaryColor:Colors.deepOrange,
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20))),

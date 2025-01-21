@@ -304,7 +304,7 @@ class _ExpensePageState extends State<ExpensePage> {
                                           Expanded(
                                             child: Divider(
                                               thickness: 1,
-                                              color: Colors.grey,
+                                              color: QuaternaryColor,
                                             ),
                                           ),
                                           Expanded(
@@ -323,7 +323,7 @@ class _ExpensePageState extends State<ExpensePage> {
                                           Expanded(
                                             child: Divider(
                                               thickness: 1,
-                                              color: Colors.grey,
+                                              color: QuaternaryColor,
                                             ),
                                           ),
                                         ],
@@ -335,9 +335,9 @@ class _ExpensePageState extends State<ExpensePage> {
                                               bottom: width * 0.02),
                                           child: CustomeText(
                                             text:
-                                                "${ExpensedataModified[index]['DAY_EXPENSE']} Rs",
+                                                "₹${ExpensedataModified[index]['DAY_EXPENSE']}",
                                             fontSize: width * 0.04,
-                                            color: greyColor,
+                                            color: QuaternaryColor,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -369,14 +369,14 @@ class _ExpensePageState extends State<ExpensePage> {
                                               text:
                                                   "${ExpensedataModified[index]['CATEG_NAME']}",
                                               fontSize: width * 0.04,
-                                              color: greyColor,
+                                              color: QuaternaryColor,
                                               fontWeight: FontWeight.bold,
                                             )),
                                         SizedBox(
                                           width: width * 0.3,
                                           child: CustomeText(
                                             text:
-                                                "${ExpensedataModified[index]['AMOUNT']} Rs",
+                                                "₹${ExpensedataModified[index]['AMOUNT']}",
                                             fontSize: width * 0.04,
                                             color: Colors.red,
                                             fontWeight: FontWeight.bold,
