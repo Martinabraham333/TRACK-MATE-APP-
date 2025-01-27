@@ -26,6 +26,7 @@ mixin _$ExpenseEvent {
             dynamic category_id)
         updateExpense,
     required TResult Function(dynamic expense_Id) deleteExpense,
+    required TResult Function(dynamic Month, dynamic Year) filterExpense,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +39,7 @@ mixin _$ExpenseEvent {
             dynamic category_id)?
         updateExpense,
     TResult? Function(dynamic expense_Id)? deleteExpense,
+    TResult? Function(dynamic Month, dynamic Year)? filterExpense,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +52,7 @@ mixin _$ExpenseEvent {
             dynamic category_id)?
         updateExpense,
     TResult Function(dynamic expense_Id)? deleteExpense,
+    TResult Function(dynamic Month, dynamic Year)? filterExpense,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -59,6 +62,7 @@ mixin _$ExpenseEvent {
     required TResult Function(FetchExpense value) fetchExpense,
     required TResult Function(UpdateExpense value) updateExpense,
     required TResult Function(DeleteExpense value) deleteExpense,
+    required TResult Function(FilterExpense value) filterExpense,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,6 +71,7 @@ mixin _$ExpenseEvent {
     TResult? Function(FetchExpense value)? fetchExpense,
     TResult? Function(UpdateExpense value)? updateExpense,
     TResult? Function(DeleteExpense value)? deleteExpense,
+    TResult? Function(FilterExpense value)? filterExpense,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +80,7 @@ mixin _$ExpenseEvent {
     TResult Function(FetchExpense value)? fetchExpense,
     TResult Function(UpdateExpense value)? updateExpense,
     TResult Function(DeleteExpense value)? deleteExpense,
+    TResult Function(FilterExpense value)? filterExpense,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -197,6 +203,7 @@ class _$AddExpenseImpl implements AddExpense {
             dynamic category_id)
         updateExpense,
     required TResult Function(dynamic expense_Id) deleteExpense,
+    required TResult Function(dynamic Month, dynamic Year) filterExpense,
   }) {
     return addExpense(expense, date, category, category_id);
   }
@@ -212,6 +219,7 @@ class _$AddExpenseImpl implements AddExpense {
             dynamic category_id)?
         updateExpense,
     TResult? Function(dynamic expense_Id)? deleteExpense,
+    TResult? Function(dynamic Month, dynamic Year)? filterExpense,
   }) {
     return addExpense?.call(expense, date, category, category_id);
   }
@@ -227,6 +235,7 @@ class _$AddExpenseImpl implements AddExpense {
             dynamic category_id)?
         updateExpense,
     TResult Function(dynamic expense_Id)? deleteExpense,
+    TResult Function(dynamic Month, dynamic Year)? filterExpense,
     required TResult orElse(),
   }) {
     if (addExpense != null) {
@@ -242,6 +251,7 @@ class _$AddExpenseImpl implements AddExpense {
     required TResult Function(FetchExpense value) fetchExpense,
     required TResult Function(UpdateExpense value) updateExpense,
     required TResult Function(DeleteExpense value) deleteExpense,
+    required TResult Function(FilterExpense value) filterExpense,
   }) {
     return addExpense(this);
   }
@@ -253,6 +263,7 @@ class _$AddExpenseImpl implements AddExpense {
     TResult? Function(FetchExpense value)? fetchExpense,
     TResult? Function(UpdateExpense value)? updateExpense,
     TResult? Function(DeleteExpense value)? deleteExpense,
+    TResult? Function(FilterExpense value)? filterExpense,
   }) {
     return addExpense?.call(this);
   }
@@ -264,6 +275,7 @@ class _$AddExpenseImpl implements AddExpense {
     TResult Function(FetchExpense value)? fetchExpense,
     TResult Function(UpdateExpense value)? updateExpense,
     TResult Function(DeleteExpense value)? deleteExpense,
+    TResult Function(FilterExpense value)? filterExpense,
     required TResult orElse(),
   }) {
     if (addExpense != null) {
@@ -370,6 +382,7 @@ class _$FetchExpenseImpl implements FetchExpense {
             dynamic category_id)
         updateExpense,
     required TResult Function(dynamic expense_Id) deleteExpense,
+    required TResult Function(dynamic Month, dynamic Year) filterExpense,
   }) {
     return fetchExpense(month, day);
   }
@@ -385,6 +398,7 @@ class _$FetchExpenseImpl implements FetchExpense {
             dynamic category_id)?
         updateExpense,
     TResult? Function(dynamic expense_Id)? deleteExpense,
+    TResult? Function(dynamic Month, dynamic Year)? filterExpense,
   }) {
     return fetchExpense?.call(month, day);
   }
@@ -400,6 +414,7 @@ class _$FetchExpenseImpl implements FetchExpense {
             dynamic category_id)?
         updateExpense,
     TResult Function(dynamic expense_Id)? deleteExpense,
+    TResult Function(dynamic Month, dynamic Year)? filterExpense,
     required TResult orElse(),
   }) {
     if (fetchExpense != null) {
@@ -415,6 +430,7 @@ class _$FetchExpenseImpl implements FetchExpense {
     required TResult Function(FetchExpense value) fetchExpense,
     required TResult Function(UpdateExpense value) updateExpense,
     required TResult Function(DeleteExpense value) deleteExpense,
+    required TResult Function(FilterExpense value) filterExpense,
   }) {
     return fetchExpense(this);
   }
@@ -426,6 +442,7 @@ class _$FetchExpenseImpl implements FetchExpense {
     TResult? Function(FetchExpense value)? fetchExpense,
     TResult? Function(UpdateExpense value)? updateExpense,
     TResult? Function(DeleteExpense value)? deleteExpense,
+    TResult? Function(FilterExpense value)? filterExpense,
   }) {
     return fetchExpense?.call(this);
   }
@@ -437,6 +454,7 @@ class _$FetchExpenseImpl implements FetchExpense {
     TResult Function(FetchExpense value)? fetchExpense,
     TResult Function(UpdateExpense value)? updateExpense,
     TResult Function(DeleteExpense value)? deleteExpense,
+    TResult Function(FilterExpense value)? filterExpense,
     required TResult orElse(),
   }) {
     if (fetchExpense != null) {
@@ -557,6 +575,7 @@ class _$UpdateExpenseImpl implements UpdateExpense {
             dynamic category_id)
         updateExpense,
     required TResult Function(dynamic expense_Id) deleteExpense,
+    required TResult Function(dynamic Month, dynamic Year) filterExpense,
   }) {
     return updateExpense(expense, date, expense_Id, category_id);
   }
@@ -572,6 +591,7 @@ class _$UpdateExpenseImpl implements UpdateExpense {
             dynamic category_id)?
         updateExpense,
     TResult? Function(dynamic expense_Id)? deleteExpense,
+    TResult? Function(dynamic Month, dynamic Year)? filterExpense,
   }) {
     return updateExpense?.call(expense, date, expense_Id, category_id);
   }
@@ -587,6 +607,7 @@ class _$UpdateExpenseImpl implements UpdateExpense {
             dynamic category_id)?
         updateExpense,
     TResult Function(dynamic expense_Id)? deleteExpense,
+    TResult Function(dynamic Month, dynamic Year)? filterExpense,
     required TResult orElse(),
   }) {
     if (updateExpense != null) {
@@ -602,6 +623,7 @@ class _$UpdateExpenseImpl implements UpdateExpense {
     required TResult Function(FetchExpense value) fetchExpense,
     required TResult Function(UpdateExpense value) updateExpense,
     required TResult Function(DeleteExpense value) deleteExpense,
+    required TResult Function(FilterExpense value) filterExpense,
   }) {
     return updateExpense(this);
   }
@@ -613,6 +635,7 @@ class _$UpdateExpenseImpl implements UpdateExpense {
     TResult? Function(FetchExpense value)? fetchExpense,
     TResult? Function(UpdateExpense value)? updateExpense,
     TResult? Function(DeleteExpense value)? deleteExpense,
+    TResult? Function(FilterExpense value)? filterExpense,
   }) {
     return updateExpense?.call(this);
   }
@@ -624,6 +647,7 @@ class _$UpdateExpenseImpl implements UpdateExpense {
     TResult Function(FetchExpense value)? fetchExpense,
     TResult Function(UpdateExpense value)? updateExpense,
     TResult Function(DeleteExpense value)? deleteExpense,
+    TResult Function(FilterExpense value)? filterExpense,
     required TResult orElse(),
   }) {
     if (updateExpense != null) {
@@ -727,6 +751,7 @@ class _$DeleteExpenseImpl implements DeleteExpense {
             dynamic category_id)
         updateExpense,
     required TResult Function(dynamic expense_Id) deleteExpense,
+    required TResult Function(dynamic Month, dynamic Year) filterExpense,
   }) {
     return deleteExpense(expense_Id);
   }
@@ -742,6 +767,7 @@ class _$DeleteExpenseImpl implements DeleteExpense {
             dynamic category_id)?
         updateExpense,
     TResult? Function(dynamic expense_Id)? deleteExpense,
+    TResult? Function(dynamic Month, dynamic Year)? filterExpense,
   }) {
     return deleteExpense?.call(expense_Id);
   }
@@ -757,6 +783,7 @@ class _$DeleteExpenseImpl implements DeleteExpense {
             dynamic category_id)?
         updateExpense,
     TResult Function(dynamic expense_Id)? deleteExpense,
+    TResult Function(dynamic Month, dynamic Year)? filterExpense,
     required TResult orElse(),
   }) {
     if (deleteExpense != null) {
@@ -772,6 +799,7 @@ class _$DeleteExpenseImpl implements DeleteExpense {
     required TResult Function(FetchExpense value) fetchExpense,
     required TResult Function(UpdateExpense value) updateExpense,
     required TResult Function(DeleteExpense value) deleteExpense,
+    required TResult Function(FilterExpense value) filterExpense,
   }) {
     return deleteExpense(this);
   }
@@ -783,6 +811,7 @@ class _$DeleteExpenseImpl implements DeleteExpense {
     TResult? Function(FetchExpense value)? fetchExpense,
     TResult? Function(UpdateExpense value)? updateExpense,
     TResult? Function(DeleteExpense value)? deleteExpense,
+    TResult? Function(FilterExpense value)? filterExpense,
   }) {
     return deleteExpense?.call(this);
   }
@@ -794,6 +823,7 @@ class _$DeleteExpenseImpl implements DeleteExpense {
     TResult Function(FetchExpense value)? fetchExpense,
     TResult Function(UpdateExpense value)? updateExpense,
     TResult Function(DeleteExpense value)? deleteExpense,
+    TResult Function(FilterExpense value)? filterExpense,
     required TResult orElse(),
   }) {
     if (deleteExpense != null) {
@@ -812,6 +842,183 @@ abstract class DeleteExpense implements ExpenseEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeleteExpenseImplCopyWith<_$DeleteExpenseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FilterExpenseImplCopyWith<$Res> {
+  factory _$$FilterExpenseImplCopyWith(
+          _$FilterExpenseImpl value, $Res Function(_$FilterExpenseImpl) then) =
+      __$$FilterExpenseImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({dynamic Month, dynamic Year});
+}
+
+/// @nodoc
+class __$$FilterExpenseImplCopyWithImpl<$Res>
+    extends _$ExpenseEventCopyWithImpl<$Res, _$FilterExpenseImpl>
+    implements _$$FilterExpenseImplCopyWith<$Res> {
+  __$$FilterExpenseImplCopyWithImpl(
+      _$FilterExpenseImpl _value, $Res Function(_$FilterExpenseImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? Month = freezed,
+    Object? Year = freezed,
+  }) {
+    return _then(_$FilterExpenseImpl(
+      freezed == Month ? _value.Month! : Month,
+      freezed == Year ? _value.Year! : Year,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FilterExpenseImpl implements FilterExpense {
+  const _$FilterExpenseImpl(this.Month, this.Year);
+
+  @override
+  final dynamic Month;
+  @override
+  final dynamic Year;
+
+  @override
+  String toString() {
+    return 'ExpenseEvent.filterExpense(Month: $Month, Year: $Year)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FilterExpenseImpl &&
+            const DeepCollectionEquality().equals(other.Month, Month) &&
+            const DeepCollectionEquality().equals(other.Year, Year));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(Month),
+      const DeepCollectionEquality().hash(Year));
+
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FilterExpenseImplCopyWith<_$FilterExpenseImpl> get copyWith =>
+      __$$FilterExpenseImplCopyWithImpl<_$FilterExpenseImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(dynamic expense, dynamic date, dynamic category,
+            dynamic category_id)
+        addExpense,
+    required TResult Function(dynamic month, dynamic day) fetchExpense,
+    required TResult Function(dynamic expense, dynamic date, dynamic expense_Id,
+            dynamic category_id)
+        updateExpense,
+    required TResult Function(dynamic expense_Id) deleteExpense,
+    required TResult Function(dynamic Month, dynamic Year) filterExpense,
+  }) {
+    return filterExpense(Month, Year);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(dynamic expense, dynamic date, dynamic category,
+            dynamic category_id)?
+        addExpense,
+    TResult? Function(dynamic month, dynamic day)? fetchExpense,
+    TResult? Function(dynamic expense, dynamic date, dynamic expense_Id,
+            dynamic category_id)?
+        updateExpense,
+    TResult? Function(dynamic expense_Id)? deleteExpense,
+    TResult? Function(dynamic Month, dynamic Year)? filterExpense,
+  }) {
+    return filterExpense?.call(Month, Year);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(dynamic expense, dynamic date, dynamic category,
+            dynamic category_id)?
+        addExpense,
+    TResult Function(dynamic month, dynamic day)? fetchExpense,
+    TResult Function(dynamic expense, dynamic date, dynamic expense_Id,
+            dynamic category_id)?
+        updateExpense,
+    TResult Function(dynamic expense_Id)? deleteExpense,
+    TResult Function(dynamic Month, dynamic Year)? filterExpense,
+    required TResult orElse(),
+  }) {
+    if (filterExpense != null) {
+      return filterExpense(Month, Year);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AddExpense value) addExpense,
+    required TResult Function(FetchExpense value) fetchExpense,
+    required TResult Function(UpdateExpense value) updateExpense,
+    required TResult Function(DeleteExpense value) deleteExpense,
+    required TResult Function(FilterExpense value) filterExpense,
+  }) {
+    return filterExpense(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AddExpense value)? addExpense,
+    TResult? Function(FetchExpense value)? fetchExpense,
+    TResult? Function(UpdateExpense value)? updateExpense,
+    TResult? Function(DeleteExpense value)? deleteExpense,
+    TResult? Function(FilterExpense value)? filterExpense,
+  }) {
+    return filterExpense?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AddExpense value)? addExpense,
+    TResult Function(FetchExpense value)? fetchExpense,
+    TResult Function(UpdateExpense value)? updateExpense,
+    TResult Function(DeleteExpense value)? deleteExpense,
+    TResult Function(FilterExpense value)? filterExpense,
+    required TResult orElse(),
+  }) {
+    if (filterExpense != null) {
+      return filterExpense(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FilterExpense implements ExpenseEvent {
+  const factory FilterExpense(final dynamic Month, final dynamic Year) =
+      _$FilterExpenseImpl;
+
+  dynamic get Month;
+  dynamic get Year;
+
+  /// Create a copy of ExpenseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FilterExpenseImplCopyWith<_$FilterExpenseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -1,85 +1,81 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
+
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:open_filex/open_filex.dart';
 
 GenerateExpenseReport(ExpenseList) async {
-  print("GENERATE EXPENSE REPORT");
-  print("ExpenseList $ExpenseList");
+  DateFormat dateFormat = DateFormat("MMM dd yyyy");
+  ExpenseList.sort((a, b) {
+    DateTime dateA = dateFormat.parse(a["DATE"]);
+    DateTime dateB = dateFormat.parse(b["DATE"]);
+    return dateA.compareTo(dateB); // Ascending order
+  });
 
-  List expenseData = [];
-  List<String> dates = [];
-  DateTime now = DateTime.now();
+  print("GENERATE EXPENSE REPORT $ExpenseList");
 
-  DateTime firstDay = DateTime(now.year, now.month, 1);
-  DateTime lastDay = DateTime(now.year, now.month + 1, 0);
+  List<Map<String, List<Map<String, dynamic>>>> ExpenseData = [];
 
-  DateFormat formatter = DateFormat("MMM dd yyyy");
+  List DateList = [];
+  for (var item in ExpenseList) {
+    DateList.add(item['DATE'].toString());
+  }
+  DateList = DateList.toSet().toList();
+  print("DateList $DateList");
 
-  // for (int i = 0; i <= lastDay.difference(firstDay).inDays; i++) {
-  //   DateTime currentDate = firstDay.add(Duration(days: i));
-  //   dates.add(formatter.format(currentDate));
-  // }
+  for (var i = 0; i < DateList.length; i++) {
+    ExpenseData.add({DateList[i]: []});
+  }
 
-  // for (var date in dates) {
-  //   for (var expesne in ExpenseList) {
-  //     List tempExpense = [];
-  //     List dayExpense = [];
-  //     if (date == expesne['DATE']) {
-  //       tempExpense.add({
-  //         'EXPENSE_ID':expesne['EXPENSE_ID'],
-  //         'AMOUNT':expesne['AMOUNT'],
-  //         'DATE':expesne['DATE'],
-  //         'CATEG_ID':expesne['CATEG_ID'],
-  //         'CATEG_NAME':expesne['CATEG_NAME'],
-  //         'DAY_EXPENSE':expesne['DAY_EXPENSE'],
-  //       });
-  //     }
-  //   }
-  // }
-
-  // print("dates $dates");
-  List Temp = [];
-  double amount = 0.0;
-  for (var i = 0; i < ExpenseList.length - 2; i++) {
-    if (ExpenseList[i]['DATE'] == ExpenseList[i + 1]['DATE']) {
-      amount = amount == 0.0 ? double.parse(ExpenseList[i]['AMOUNT'].toString()) : amount +
-          double.parse(ExpenseList[i+1]['AMOUNT'].toString());
-      Temp.add({
-        'EXPENSE_ID': ExpenseList[i]['EXPENSE_ID'],
-        'AMOUNT': amount,
-        'DATE': ExpenseList[i]['DATE'],
-        'CATEG_ID': ExpenseList[i]['CATEG_ID'],
-        'CATEG_NAME': ExpenseList[i]['CATEG_NAME'],
-        'DAY_EXPENSE': ExpenseList[i]['DAY_EXPENSE'],
-      });
-    } else {
-      amount = 0.0;
-      Temp.add({
-        'EXPENSE_ID': ExpenseList[i]['EXPENSE_ID'],
-        'AMOUNT': ExpenseList[i]['AMOUNT'],
-        'DATE': ExpenseList[i]['DATE'],
-        'CATEG_ID': ExpenseList[i]['CATEG_ID'],
-        'CATEG_NAME': ExpenseList[i]['CATEG_NAME'],
-        'DAY_EXPENSE': ExpenseList[i]['DAY_EXPENSE'],
-      });
+  for (var i = 0; i < DateList.length; i++) {
+    for (var item in ExpenseList) {
+      if (DateList[i] == item['DATE'].toString()) {
+        ExpenseData[i][DateList[i]]!.add(item);
+      }
     }
   }
-  print("Temp $Temp");
+  print("ExpenseData  ${ExpenseData.length}");
   final pdf = pw.Document();
   pdf.addPage(pw.Page(build: (pw.Context context) {
-    return pw.Column(children: [
-      for (var item in ExpenseList)
-        pw.Column(children: [
-          pw.Column(children: [
-            pw.Text(item['DATE'].toString()),
-            pw.Text(item['CATEG_NAME'].toString()),
-            pw.Text(item['AMOUNT'].toString()),
-            pw.Text(item['DAY_EXPENSE'].toString()),
-          ])
-        ])
-    ]);
+    return pw.ListView.builder(
+        itemBuilder: (context, index) {
+          return pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Row(children: [
+                  pw.Padding(
+                      padding: pw.EdgeInsets.all(10),
+                      child: pdfDateText(ExpenseData[index].keys.first)),
+                  pw.Padding(
+                      padding: pw.EdgeInsets.all(10),
+                      child: pdfDayExpenseText("INR ${ExpenseData[index][DateList[index]]![0]['DAY_EXPENSE'].toString()}")),
+                ]),
+                pw.Table(border: pw.TableBorder.all(), children: [
+                  for (var item in ExpenseData[index][DateList[index]]!)
+                    pw.TableRow(children: [
+                      pw.Container(
+                          width: 300,
+                          height: 30,
+                          child: pw.Padding(
+                            padding: pw.EdgeInsets.all(10),
+                            child: pdfText(item['CATEG_NAME']),
+                          )),
+                      pw.Container(
+                          width: 300,
+                          height: 30,
+                          child: pw.Padding(
+                            padding: pw.EdgeInsets.all(10),
+                            child: pdfText("INR ${item['AMOUNT']}"),
+                          )),
+                    ])
+                ])
+              ]);
+        },
+        itemCount: ExpenseData.length);
   }));
 
   Directory? downloadsDirectory;
@@ -93,4 +89,24 @@ GenerateExpenseReport(ExpenseList) async {
   await file.writeAsBytes(await pdf.save());
   print("PDF SAVED");
   await OpenFilex.open(filePath);
+}
+
+pdfDateText(date) {
+  return pw.Text(date,
+      style: pw.TextStyle(
+          fontSize: 14, fontWeight: pw.FontWeight.bold, color: PdfColors.blue));
+}
+
+pdfDayExpenseText(date) {
+  return pw.Text(date,
+      style: pw.TextStyle(
+          fontSize: 14, fontWeight: pw.FontWeight.bold, color: PdfColors.red));
+}
+
+pdfText(date) {
+  return pw.Text(date,
+      style: pw.TextStyle(
+          fontSize: 12,
+          fontWeight: pw.FontWeight.bold,
+          color: PdfColors.black));
 }

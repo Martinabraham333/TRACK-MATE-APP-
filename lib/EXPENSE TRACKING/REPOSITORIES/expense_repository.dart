@@ -1,4 +1,4 @@
-
+import 'package:intl/intl.dart';
 import 'package:track_mate/DATABASE.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/MODELS/expense_model.dart';
 
@@ -20,6 +20,8 @@ class ExpenseRepository {
     }
     return data;
   }
+
+
 
   deleteExpense(expenseId) async {
     print("expenseId $expenseId");
@@ -48,8 +50,7 @@ class ExpenseRepository {
 
   dayExpense(day) async {
     final resp = await db.rawQuery(
-        'SELECT  SUM(AMOUNT)DAY_EXPENSE FROM EXPENSE WHERE DATE=?',
-        [day]);
+        'SELECT  SUM(AMOUNT)DAY_EXPENSE FROM EXPENSE WHERE DATE=?', [day]);
     print("Response After fetching Daily Expense : $resp");
     return resp[0]['DAY_EXPENSE'] ?? 0;
   }

@@ -15,6 +15,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     on<FetchExpense>(_fetchExpense);
     on<UpdateExpense>(_updateExpense);
     on<DeleteExpense>(_deleteExpense);
+    on<FilterExpense>(_filterExpense);
   }
 
   _addExpense(AddExpense event, Emitter<ExpenseState> state) async {
@@ -80,6 +81,25 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       emit(const ExpenseState.error('Error while deleting expense'));
       print('Error while deleting expense $e');
     }
+  }
+
+  _filterExpense(FilterExpense event, Emitter<ExpenseState> state) async {
+    final Expensedata = await repository.fetchExpense();
+    final monthExpense = await repository.monthlyExpense(event.Month);
+
+    List eachDayTotalExpenseList = await calculatingEachDayExpense(Expensedata);
+    List ExpensedataModified =
+        await modifyingExpenseList(Expensedata, eachDayTotalExpenseList);
+
+    ExpensedataModified = ExpensedataModified.where((item) {
+
+      return item['DATE'].toString().substring(0, 3) ==
+              event.Month.toString() &&
+          item['DATE'].toString().substring(7, 11) == event.Year.toString();
+    }).toList();
+    print("ExpensedataModified after filtering   $ExpensedataModified");
+    emit(ExpenseState.loaded('', ExpensedataModified, monthExpense, [], [], [],
+        [], eachDayTotalExpenseList));
   }
 }
 
