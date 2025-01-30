@@ -30,15 +30,35 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   }
 
   _fetchExpense(FetchExpense event, Emitter<ExpenseState> state) async {
+    print("CALLING FETCH EXPENSE");
     emit(const ExpenseState.loading());
     try {
       final Expensedata = await repository.fetchExpense();
-      final monthExpense = await repository.monthlyExpense(event.month);
+      if (Expensedata.isEmpty) {
+          emit(ExpenseState.loaded(
+          '',
+          [],
+          '',
+          0.0,
+          [],
+          0.0,
+         0.0,
+       []));
+      }
+      else{
+final monthExpense = await repository.monthlyExpense(
+          DateFormat.MMM().format(DateTime.now()),
+          DateFormat('yyyy').format(DateTime.now()));
       final dayExpense = await repository.dayExpense(event.day);
-      List categoryExpense =
-          await calculatingTotalExpensInMonth(Expensedata, monthExpense);
-      double averageExpense =
-          await calculatingAverageExpense(Expensedata, monthExpense);
+      List categoryExpense = await calculatingTotalExpensInMonth(
+          Expensedata, monthExpense, event.FilterMonth, event.FilterYear);
+
+      print("categoryExpense  $categoryExpense");
+      double averageExpense = await calculatingAverageExpense(
+        Expensedata,
+        monthExpense,
+        DateFormat.MMM().format(DateTime.now()),
+      );
       double predictedExpense =
           await calculatingPredictedExpense(averageExpense);
 
@@ -46,7 +66,6 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
           await calculatingEachDayExpense(Expensedata);
       List ExpensedataModified =
           await modifyingExpenseList(Expensedata, eachDayTotalExpenseList);
-
       emit(ExpenseState.loaded(
           '',
           ExpensedataModified,
@@ -56,9 +75,13 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
           averageExpense,
           predictedExpense,
           eachDayTotalExpenseList));
+      }
+      
+
+    
     } catch (e) {
-      emit(const ExpenseState.error('Error while fetching expense'));
-      print('Error while fetching expense $e');
+      emit(const ExpenseState.error('Error while fetching expense '));
+      print('Error while fetching expense /// $e');
     }
   }
 
@@ -85,27 +108,52 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
 
   _filterExpense(FilterExpense event, Emitter<ExpenseState> state) async {
     final Expensedata = await repository.fetchExpense();
-    final monthExpense = await repository.monthlyExpense(event.Month);
+
+    final monthExpense = await repository.monthlyExpense(
+        DateFormat.MMM().format(DateTime.now()),
+        DateFormat('yyyy').format(DateTime.now()));
+    final dayExpense = await repository
+        .dayExpense(DateFormat('MMM dd yyyy').format(DateTime.now()));
+    List categoryExpense = await calculatingTotalExpensInMonth(
+        Expensedata,
+        monthExpense,
+        DateFormat('MMM').format(DateTime.now()),
+        DateFormat('yyyy').format(DateTime.now()));
+
+    print("categoryExpense  $categoryExpense");
+    double averageExpense = await calculatingAverageExpense(
+      Expensedata,
+      monthExpense,
+      DateFormat.MMM().format(DateTime.now()),
+    );
+    double predictedExpense = await calculatingPredictedExpense(averageExpense);
 
     List eachDayTotalExpenseList = await calculatingEachDayExpense(Expensedata);
     List ExpensedataModified =
         await modifyingExpenseList(Expensedata, eachDayTotalExpenseList);
 
     ExpensedataModified = ExpensedataModified.where((item) {
-
       return item['DATE'].toString().substring(0, 3) ==
               event.Month.toString() &&
           item['DATE'].toString().substring(7, 11) == event.Year.toString();
     }).toList();
     print("ExpensedataModified after filtering   $ExpensedataModified");
-    emit(ExpenseState.loaded('', ExpensedataModified, monthExpense, [], [], [],
-        [], eachDayTotalExpenseList));
+    emit(ExpenseState.loaded(
+        '',
+        ExpensedataModified,
+        monthExpense,
+        dayExpense,
+        categoryExpense,
+        averageExpense,
+        predictedExpense,
+        eachDayTotalExpenseList));
   }
 }
 
-calculatingTotalExpensInMonth(Expensedata, monthExpense) {
-  DateTime now = DateTime.now();
-  String month = DateFormat('MMM').format(now);
+calculatingTotalExpensInMonth(Expensedata, monthExpense, Month, Year) {
+  // DateTime now = DateTime.now();
+  // String month = DateFormat('MMM').format(now);
+
   List categoryExpense = [];
   List categories = [];
   List TempcategoriesUniq = [];
@@ -114,7 +162,8 @@ calculatingTotalExpensInMonth(Expensedata, monthExpense) {
   // STEPS FOR CREATING LIST THAT CONTAINS LIST OF EACH CATEGORY AND THEIR TOTAL EXPENSE IN MONTH
   // CREATING CATEGORY ID AND CATEGORY NAME LIST
   for (var element in Expensedata) {
-    if (element.val3.toString().substring(0, 3) == month) {
+    if (element.val3.toString().substring(0, 3) == Month.toString() &&
+        element.val3.toString().substring(7, 11) == Year.toString()) {
       categories.add(
           "${element.val4}*${element.val5}"); // USING * FOR SPLITING TEXT THAT CONTAINS STARS
     }
@@ -122,14 +171,33 @@ calculatingTotalExpensInMonth(Expensedata, monthExpense) {
   // CONVERTING CATEGORY ID LIST TO UNIQ LIST PREVENTING DUPLICATE VALUE
   TempcategoriesUniq = categories.toSet().toList();
   // THIS IS FOR CREATING LIST OF LIST THAT CONTAINS CATEGORY ID AND CATEGORY NAME
+  print("TempcategoriesUniq $TempcategoriesUniq");
+  print("categories $categories");
   for (var element in TempcategoriesUniq) {
     List SplitedList = element.split('*');
     categoriesUniq.add(SplitedList);
   }
   // FOR LOOP THROUGH UNIQ CATEGORY ID TO CALCULATE TOTAL EXPENSE OF EACH CATEGORY
+  List FilteredList = [];
+  print("Month $Month Year $Year");
+
+  for (var item in Expensedata) {
+    print(
+        "Month ${item.val3.toString().substring(0, 3)} Year ${item.val3.toString().substring(7, 11)}");
+    if (item.val3.toString().substring(0, 3) == Month.toString() &&
+        item.val3.toString().substring(7, 11) == Year.toString()) {
+      FilteredList.add(item);
+    }
+  }
+  print("FilteredList in category expense $FilteredList");
+  print("categoriesUniq $categoriesUniq");
+
   for (var category in categoriesUniq) {
+    print("FIRST FOR LOOP");
     double totalCategExpense = 0.0;
-    for (var expense in Expensedata) {
+    for (var expense in FilteredList) {
+      print("SECOND FOR LOOP");
+      print("for loop ${category[0]} == ${expense.val4}");
       if (category[0] == expense.val4) {
         // IF CATEGORY ID EQUALS CALCULATE TOTAL EXPENSE
         totalCategExpense = totalCategExpense + double.parse(expense.val2);
@@ -149,19 +217,29 @@ calculatingTotalExpensInMonth(Expensedata, monthExpense) {
   return categoryExpense;
 }
 
-calculatingAverageExpense(Expensedata, monthExpense) {
+calculatingAverageExpense(Expensedata, monthExpense, Month) {
   // STEPS FOR CALCULATING AVERAGE EXPENSE IN ONE DAY
+  var Year = DateFormat('yyyy').format(DateTime.now());
+  List FilteredList = [];
+  for (var item in Expensedata) {
+    if (item.val3.toString().substring(0, 3) == Month &&
+        item.val3.toString().substring(7, 11) == Year) {
+      FilteredList.add(item);
+    }
+  }
+  // print(
+  //     "FilteredList  $FilteredList  $Month ${Expensedata[0].val3.toString().substring(7, 11)}");
   double averageExpense = 0.0;
   int numberOfDays = 0;
   // WE TAKE CURRENT INDEX AND PREVIOUS INDEX FOR CALCULATING NUMBER OF DAYS
   // NUMBER OF DAYS SHOULD BE UNIQUE AND IT SHOULD NOT REPEAT
   // IN FOR LOOP WE CHCEK CURRENT DATE AND PREVIOUS DATE IS SAME ?
 
-  for (var i = 0; i < Expensedata.length; i++) {
+  for (var i = 0; i < FilteredList.length; i++) {
     if (i == 0) {
       // NUMBER OF DAYS INCREASE IF IT IS FIRST DATE IN EXPENSE LIST
       numberOfDays = numberOfDays + 1;
-    } else if (Expensedata[i].val3 != Expensedata[i - 1].val3) {
+    } else if (FilteredList[i].val3 != FilteredList[i - 1].val3) {
       // IF CURRENT DATE IF NOT SAME AS PREVIOUS DATE NUMBER OF DAYS INCREASE
       numberOfDays = numberOfDays + 1;
     }

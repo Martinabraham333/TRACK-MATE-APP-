@@ -31,14 +31,21 @@ class _ExpensePageState extends State<ExpensePage> {
   TextEditingController _expenseController = TextEditingController();
   TextEditingController _monthController = TextEditingController();
   TextEditingController _yearController = TextEditingController();
-      var monthVar;
-    var yearVar;
+  var monthVar;
+  var yearVar;
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<ExpenseBloc>(context).add(ExpenseEvent.fetchExpense(
-        DateFormat.MMM().format(DateTime.now()),
-        DateFormat('MMM dd yyyy').format(DateTime.now())));
+
+
+    context.read<ExpenseBloc>().add(ExpenseEvent.filterExpense(
+        DateFormat('MMM').format(DateTime.now()),
+        DateFormat('yyyy').format(DateTime.now()),));
+
+    _monthController.text = DateFormat('MMMM').format(DateTime.now());
+    _yearController.text = DateFormat('yyyy').format(DateTime.now());
+    monthVar = DateFormat('MMM').format(DateTime.now());
+    yearVar = DateFormat('yyyy').format(DateTime.now());
   }
 
   var categoryId;
@@ -67,7 +74,7 @@ class _ExpensePageState extends State<ExpensePage> {
                         categoryExpense,
                         totalMonthexpense,
                         predictedExpense,
-                        eachDayTotalExpense) =>
+                        eachDayTotalExpense,) =>
                     _buildExpenseUi(
                         context, ExpensedataModified, eachDayTotalExpense),
                 loading: () => const Center(child: CircularProgressIndicator()),
@@ -134,6 +141,7 @@ class _ExpensePageState extends State<ExpensePage> {
       child: Column(
         children: [
           CustomTextField(
+                 readonly: true,
             controller: _categoryController,
             hintText: "Select Category",
             widthSize: width * 0.8,
@@ -175,6 +183,7 @@ class _ExpensePageState extends State<ExpensePage> {
             height: height * 0.02,
           ),
           CustomDateTextField(
+            readonly: true,
             controller: _dateController,
             hintText: "Select Date",
             widthSize: width * 0.8,
@@ -224,11 +233,10 @@ class _ExpensePageState extends State<ExpensePage> {
                           _dateController.text,
                           _categoryController.text,
                           categoryId));
-
                   BlocProvider.of<ExpenseBloc>(context).add(
-                      ExpenseEvent.fetchExpense(
-                          DateFormat.MMM().format(DateTime.now()),
-                          DateFormat('MMM dd yyyy').format(DateTime.now())));
+                      ExpenseEvent.filterExpense(
+                          DateFormat('MMM').format(DateTime.now()),
+                          DateFormat('yyyy').format(DateTime.now()),));
 
                   expenseId = null;
                 } else {
@@ -240,9 +248,9 @@ class _ExpensePageState extends State<ExpensePage> {
                           expenseId,
                           categoryId));
                   BlocProvider.of<ExpenseBloc>(context).add(
-                      ExpenseEvent.fetchExpense(
-                          DateFormat.MMM().format(DateTime.now()),
-                          DateFormat('MMM dd yyyy').format(DateTime.now())));
+                      ExpenseEvent.filterExpense(
+                          DateFormat('MMM').format(DateTime.now()),
+                          DateFormat('yyyy').format(DateTime.now()),));
                   expenseId = null;
                 }
 
@@ -262,8 +270,7 @@ class _ExpensePageState extends State<ExpensePage> {
   Widget _buildExpenseUi(context, ExpensedataModified, eachDayTotalExpense) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
-
+    print("$eachDayTotalExpense");
     return SafeArea(
         child: Column(
       children: [
@@ -273,69 +280,75 @@ class _ExpensePageState extends State<ExpensePage> {
             Scaffold.of(context).openDrawer();
           },
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            CustomTextField(
-              controller: _monthController,
-              hintText: 'Select Month',
-              widthSize: width * 0.4,
-              readonly: true,
-              icon: Icons.calendar_month,
-              ontap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Monthselection(
-                        onTap: (value) {
-                          _monthController.text = value[0];
-                          monthVar = value[1];
-                        
-                          if (_yearController.text.isEmpty) {
-                            context.read<ExpenseBloc>().add(
-                                ExpenseEvent.filterExpense(monthVar,
-                                    DateFormat('yyyy').format(DateTime.now())));
-                          } else {
-                            context.read<ExpenseBloc>().add(
-                                ExpenseEvent.filterExpense(monthVar, yearVar));
-                          }
-                        },
-                      );
-                    });
-              },
-            ),
-            CustomTextField(
-              controller: _yearController,
-              hintText: 'Select Year',
-              widthSize: width * 0.4,
-              readonly: true,
-              icon: Icons.calendar_today,
-              ontap: () async {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Yearselection(
-                        onTap: (value) {
-                          _yearController.text = value.toString();
-                          yearVar = value;
+        eachDayTotalExpense.isEmpty
+            ? Container()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomTextField(
+                    controller: _monthController,
+                    hintText: 'Select Month',
+                    widthSize: width * 0.4,
+                    readonly: true,
+                    icon: Icons.calendar_month,
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Monthselection(
+                              onTap: (value) {
+                                _monthController.text = value[0];
+                                monthVar = value[1];
 
-                          if (_monthController.text.isEmpty) {
-                            context.read<ExpenseBloc>().add(
-                                ExpenseEvent.filterExpense(
-                                    DateFormat('MMM').format(DateTime.now()),
-                                    yearVar));
-                          } else {
-                         
-                            context.read<ExpenseBloc>().add(
-                                ExpenseEvent.filterExpense(monthVar, yearVar));
-                          }
-                        },
-                      );
-                    });
-              },
-            ),
-          ],
-        ),
+                                if (_yearController.text.isEmpty) {
+                                  context.read<ExpenseBloc>().add(
+                                      ExpenseEvent.filterExpense(
+                                          monthVar,
+                                          DateFormat('yyyy')
+                                              .format(DateTime.now()),));
+                                } else {
+                                  context.read<ExpenseBloc>().add(
+                                      ExpenseEvent.filterExpense(
+                                          monthVar, yearVar,));
+                                }
+                              },
+                            );
+                          });
+                    },
+                  ),
+                  CustomTextField(
+                    controller: _yearController,
+                    hintText: 'Select Year',
+                    widthSize: width * 0.4,
+                    readonly: true,
+                    icon: Icons.calendar_today,
+                    ontap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Yearselection(
+                              onTap: (value) {
+                                _yearController.text = value.toString();
+                                yearVar = value;
+
+                                if (_monthController.text.isEmpty) {
+                                  context.read<ExpenseBloc>().add(
+                                      ExpenseEvent.filterExpense(
+                                          DateFormat('MMM')
+                                              .format(DateTime.now()),
+                                          yearVar,));
+                                } else {
+                                  context.read<ExpenseBloc>().add(
+                                      ExpenseEvent.filterExpense(
+                                          monthVar, yearVar,));
+                                }
+                              },
+                            );
+                          });
+                    },
+                  ),
+                ],
+              ),
         ExpensedataModified.isEmpty
             ? Column(
                 children: [
@@ -496,17 +509,12 @@ class _ExpensePageState extends State<ExpensePage> {
                                                           ExpensedataModified[
                                                                   index]
                                                               ['EXPENSE_ID']));
-                                              BlocProvider.of<ExpenseBloc>(
-                                                      context)
-                                                  .add(
-                                                      ExpenseEvent.fetchExpense(
-                                                          DateFormat.MMM()
-                                                              .format(DateTime
-                                                                  .now()),
-                                                          DateFormat(
-                                                                  'MMM dd yyyy')
-                                                              .format(DateTime
-                                                                  .now())));
+                                              context.read<ExpenseBloc>().add(
+                                                  ExpenseEvent.filterExpense(
+                                                      DateFormat('MMM').format(
+                                                          DateTime.now()),
+                                                      DateFormat('yyyy').format(
+                                                          DateTime.now())));
                                             },
                                             icon: Icons.delete,
                                             iconSize: width * 0.04,

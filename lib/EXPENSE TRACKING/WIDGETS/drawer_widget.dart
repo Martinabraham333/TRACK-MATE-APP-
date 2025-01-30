@@ -8,6 +8,7 @@ import 'package:track_mate/EXPENSE%20TRACKING/BLOC/BUDGET_BLOC/budget_bloc.dart'
 import 'package:track_mate/EXPENSE%20TRACKING/BLOC/CATEGORY_BLOC/category_bloc.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/BLOC/EXPENSE_BLOC/expense_bloc.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/SCREENS/expense_report.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custom_alert_box.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custom_text.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custom_textfield.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custome_button.dart';
@@ -25,7 +26,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   void initState() {
     BlocProvider.of<ExpenseBloc>(context).add(ExpenseEvent.fetchExpense(
-        DateFormat.MMM().format(DateTime.now()),
+        DateFormat('MMM').format(DateTime.now()),
+        DateFormat('yyyy').format(DateTime.now()),
         DateFormat('MMM dd yyyy').format(DateTime.now())));
 
     super.initState();
@@ -53,7 +55,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   placeholder: AssetImage(
                       'assets/images/black.jpg'), // Transparent placeholder
                   image: AssetImage('assets/images/logo.png'),
-                  width: width * 0.3,
+                  width: width * 0.2,
                   height: height * 0.1,
                   fadeInDuration: const Duration(seconds: 2),
                 ),
@@ -104,7 +106,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 await initDatabase();
                 BlocProvider.of<ExpenseBloc>(context).add(
                     ExpenseEvent.fetchExpense(
-                        DateFormat.MMM().format(DateTime.now()),
+                        DateFormat('MMM').format(DateTime.now()),
+                        DateFormat('yyyy').format(DateTime.now()),
                         DateFormat('MMM dd yyyy').format(DateTime.now())));
 
                 BlocProvider.of<CategoryBloc>(context)
@@ -238,12 +241,23 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                           title: "Retrive",
                                           ontap: () async {
                                             if (_monthController
-                                                    .text.isNotEmpty ||
+                                                        .text.isNotEmpty &&
+                                                    state.ExpenseList
+                                                        .isNotEmpty ||
                                                 _yearController
-                                                    .text.isNotEmpty) {
+                                                        .text.isNotEmpty &&
+                                                    state.ExpenseList
+                                                        .isNotEmpty) {
                                               await GenerateExpenseReport(
-                                                state.ExpenseList,
-                                              );
+                                                  state.ExpenseList,
+                                                  _monthController.text,
+                                                  _yearController.text,
+                                                  state.monthExpense,
+                                                  state.categoryExpense
+                                                  );
+                                            } else {
+                                              return alertBoxMessage(
+                                                  context, 'No Data Found');
                                             }
                                           },
                                           width: 400),

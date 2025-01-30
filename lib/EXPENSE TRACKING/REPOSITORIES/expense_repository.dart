@@ -40,10 +40,10 @@ class ExpenseRepository {
     print("Response After Updating Expense: $resp");
   }
 
-  monthlyExpense(currentMonth) async {
+  monthlyExpense(Month,Year) async {
     final resp = await db.rawQuery(
-        'SELECT  SUM(AMOUNT)MONTH_EXPENSE FROM EXPENSE WHERE SUBSTR(DATE, 0, 4)=?',
-        [currentMonth]);
+        'SELECT  SUM(AMOUNT)MONTH_EXPENSE FROM EXPENSE WHERE SUBSTR(DATE, 1, 3)=? AND SUBSTR(DATE, 8, 4) = ?',
+        [Month,Year]);
     print("Response After fetching monthly Expense : $resp");
     return resp[0]['MONTH_EXPENSE'] ?? 0;
   }

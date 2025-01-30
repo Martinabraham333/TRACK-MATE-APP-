@@ -6,9 +6,11 @@ import 'package:track_mate/CONSTANTS.dart';
 import 'package:track_mate/DATABASE.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/BLOC/EXPENSE_BLOC/expense_bloc.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custom_text.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custom_textfield.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custome_appbar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/drawer_widget.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/month_year_selection.dart';
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
@@ -18,11 +20,23 @@ class Home_Page extends StatefulWidget {
 }
 
 class _Home_PageState extends State<Home_Page> {
+  TextEditingController _monthController = TextEditingController();
+  TextEditingController _yearController = TextEditingController();
+  var monthVar;
+  var yearVar;
+
   void initState() {
-    super.initState();
+    print("INIT STATE ///");
     BlocProvider.of<ExpenseBloc>(context).add(ExpenseEvent.fetchExpense(
-        DateFormat.MMM().format(DateTime.now()),
-        DateFormat('MMM dd yyyy').format(DateTime.now())));
+        DateFormat('MMM').format(DateTime.now()),
+        DateFormat('yyyy').format(DateTime.now()),
+        DateFormat('MMM dd yyyy').format(DateTime.now()),));
+    print("AFTER CALLING BLOC ///");
+    _monthController.text = DateFormat('MMMM').format(DateTime.now());
+    _yearController.text = DateFormat('yyyy').format(DateTime.now());
+    monthVar = DateFormat('MMM').format(DateTime.now());
+    yearVar = DateFormat('yyyy').format(DateTime.now());
+    super.initState();
   }
 
   @override
@@ -42,7 +56,7 @@ class _Home_PageState extends State<Home_Page> {
                           categoryExpense,
                           averageExpense,
                           predictedExpense,
-                          eachDayTotalExpenseList) =>
+                          eachDayTotalExpenseList,) =>
                       _homePageUi(context, monthExp, dayExp, categoryExpense,
                           averageExpense, predictedExpense),
                   loading: () => Center(
@@ -65,268 +79,361 @@ class _Home_PageState extends State<Home_Page> {
 
   Widget _homePageUi(context, monthExp, dayExp, categoryExpense, averageExpense,
       predictedExpense) {
+    print("/////////// HOME PAGE ////////////////");
+    print("monthExp $monthExp");
+    print("dayExp $dayExp");
+    print("categoryExpense $categoryExpense");
+    print("averageExpense $averageExpense");
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            CustomeAppBar(
-              title: "Home",
-              menuOntap: () {
-                Scaffold.of(context).openDrawer();
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: height * 0.02,
-                left: width * 0.04,
-                right: width * 0.04,
-              ),
-              child: categoryExpense.isEmpty
-                  ? Column(
-                      children: [
-                        // CustomeText(
-                        //   text: "Track Mate",
-                        //   fontSize: width * 0.1,
-                        //   color: Color(0xFFC0A265),
-                        //   fontWeight: FontWeight.bold,
-                        // ),
-                        SizedBox(
-                          height: height * 0.05,
-                        ),
-                        CustomeText(
-                          text: "Lets Track Your Expense",
-                          fontSize: width * 0.05,
-                          color: SecondaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        SizedBox(
-                          height: height * 0.05,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomeText(
-                              text: "1. ",
-                              fontSize: width * 0.05,
-                              color: QuaternaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            Container(
-                              width: width * 0.8,
-                              child: CustomeText(
-                                text:
-                                    "Navigate to Category Page and Create Category",
-                                fontSize: width * 0.05,
-                                color: QuaternaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: height * 0.04,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomeText(
-                              text: "2. ",
-                              fontSize: width * 0.05,
-                              color: QuaternaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            Container(
-                              width: width * 0.8,
-                              child: CustomeText(
-                                text:
-                                    "Navigate to Expense Page and Create Expense",
-                                fontSize: width * 0.05,
-                                color: QuaternaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(
-                          height: height * 0.04,
-                        ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomeText(
-                              text: "3. ",
-                              fontSize: width * 0.05,
-                              color: QuaternaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            Container(
-                              width: width * 0.8,
-                              child: CustomeText(
-                                text:
-                                    "Navigate to Budget Page if you want to add budget for each category",
-                                fontSize: width * 0.05,
-                                color: QuaternaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: height * 0.2,
-                          width: width * 0.4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: TertiaryColor,
-                          ),
-                          child: Column(
+      child: Column(
+        children: [
+          CustomeAppBar(
+            title: "Home",
+            menuOntap: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: height * 0.02,
+                      left: width * 0.04,
+                      right: width * 0.04,
+                    ),
+                    child: monthExp.toString().isEmpty
+                        ? Column(
                             children: [
+                              // CustomeText(
+                              //   text: "Track Mate",
+                              //   fontSize: width * 0.1,
+                              //   color: Color(0xFFC0A265),
+                              //   fontWeight: FontWeight.bold,
+                              // ),
                               SizedBox(
-                                height: height * 0.01,
+                                height: height * 0.05,
                               ),
                               CustomeText(
-                                  text: "Monthly Expense",
-                                  fontSize: width * 0.04,
-                                  color: SecondaryColor),
-                              SizedBox(
-                                height: height * 0.01,
+                                text: "Lets Track Your Expense",
+                                fontSize: width * 0.05,
+                                color: SecondaryColor,
+                                fontWeight: FontWeight.bold,
                               ),
-                              CustomeText(
-                                  text: "₹$monthExp",
-                                  fontSize: width * 0.04,
-                                  color: Colors.red),
+                              SizedBox(
+                                height: height * 0.05,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomeText(
+                                    text: "1. ",
+                                    fontSize: width * 0.05,
+                                    color: QuaternaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  Container(
+                                    width: width * 0.8,
+                                    child: CustomeText(
+                                      text:
+                                          "Navigate to Category Page and Create Category",
+                                      fontSize: width * 0.05,
+                                      color: QuaternaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                               SizedBox(
                                 height: height * 0.04,
                               ),
-                              CustomeText(
-                                  text: "Predicted Expense",
-                                  fontSize: width * 0.04,
-                                  color: SecondaryColor),
-                              SizedBox(
-                                height: height * 0.01,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomeText(
+                                    text: "2. ",
+                                    fontSize: width * 0.05,
+                                    color: QuaternaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  Container(
+                                    width: width * 0.8,
+                                    child: CustomeText(
+                                      text:
+                                          "Navigate to Expense Page and Create Expense",
+                                      fontSize: width * 0.05,
+                                      color: QuaternaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              CustomeText(
-                                  text:
-                                      "₹${predictedExpense.toStringAsFixed(2)}",
-                                  fontSize: width * 0.04,
-                                  color: Colors.red),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: height * 0.2,
-                          width: width * 0.4,
-                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: TertiaryColor,
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
-                              CustomeText(
-                                  text: "Daily Expense",
-                                  fontSize: width * 0.04,
-                                  color: SecondaryColor),
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
-                              CustomeText(
-                                  text: " ₹$dayExp",
-                                  fontSize: width * 0.04,
-                                  color: Colors.red),
+
                               SizedBox(
                                 height: height * 0.04,
                               ),
-                              CustomeText(
-                                  text: "Avg Expense",
-                                  fontSize: width * 0.04,
-                                  color: SecondaryColor),
-                              SizedBox(
-                                height: height * 0.01,
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomeText(
+                                    text: "3. ",
+                                    fontSize: width * 0.05,
+                                    color: QuaternaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  Container(
+                                    width: width * 0.8,
+                                    child: CustomeText(
+                                      text:
+                                          "Navigate to Budget Page if you want to add budget for each category",
+                                      fontSize: width * 0.05,
+                                      color: QuaternaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              CustomeText(
-                                  text:
-                                      "₹${averageExpense.toStringAsFixed(2)}",
-                                  fontSize: width * 0.04,
-                                  color: Colors.red),
                             ],
-                          ),
-                        ),
-                      ],
-                    ),
-            ),
-            SizedBox(
-              height: height * 0.05,
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 200,
-                  child: PieChart(
-                    PieChartData(
-                      sections: _getSections(categoryExpense),
-                      centerSpaceRadius: 50,
-                      borderData: FlBorderData(show: false),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: width * 0.04, top: height * 0.06),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        for (var i = 0; i < categoryExpense.length; i++)
-                          Row(
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: width * 0.02, right: width * 0.04),
-                                child: Container(
-                                  width: width * 0.05,
-                                  height: width * 0.05,
-                                  color: colorsList[i],
+                              Container(
+                                height: height * 0.2,
+                                width: width * 0.4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: TertiaryColor,
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    CustomeText(
+                                        text: "Monthly Expense",
+                                        fontSize: width * 0.04,
+                                        color: SecondaryColor),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    CustomeText(
+                                        text: "₹$monthExp",
+                                        fontSize: width * 0.04,
+                                        color: Colors.red),
+                                    SizedBox(
+                                      height: height * 0.04,
+                                    ),
+                                    CustomeText(
+                                        text: "Predicted Expense",
+                                        fontSize: width * 0.04,
+                                        color: SecondaryColor),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    CustomeText(
+                                        text:
+                                            "₹${predictedExpense.toStringAsFixed(2)}",
+                                        fontSize: width * 0.04,
+                                        color: Colors.red),
+                                  ],
                                 ),
                               ),
                               Container(
-                                width: width * 0.5,
-                                child: CustomeText(
-                                    text: categoryExpense[i]['CATEG_NAME'],
-                                    fontSize: width * 0.05,
-                                    color: Colors.white),
+                                height: height * 0.2,
+                                width: width * 0.4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: TertiaryColor,
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    CustomeText(
+                                        text: "Daily Expense",
+                                        fontSize: width * 0.04,
+                                        color: SecondaryColor),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    CustomeText(
+                                        text: " ₹$dayExp",
+                                        fontSize: width * 0.04,
+                                        color: Colors.red),
+                                    SizedBox(
+                                      height: height * 0.04,
+                                    ),
+                                    CustomeText(
+                                        text: "Avg Expense",
+                                        fontSize: width * 0.04,
+                                        color: SecondaryColor),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    CustomeText(
+                                        text:
+                                            "₹${averageExpense.toStringAsFixed(2)}",
+                                        fontSize: width * 0.04,
+                                        color: Colors.red),
+                                  ],
+                                ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.all(width * 0.02),
-                                child: CustomeText(
-                                    text:
-                                        "₹${categoryExpense[i]['AMOUNT'].toString()}",
-                                    fontSize: width * 0.05,
-                                    color: QuaternaryColor),
-                              )
                             ],
-                          )
-                      ],
-                    ),
+                          ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: height * 0.05,
+                  ),
+            monthExp.toString().isEmpty ? Container() :   Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CustomTextField(
+                            controller: _monthController,
+                            hintText: 'Select Month',
+                            widthSize: width * 0.4,
+                            readonly: true,
+                            icon: Icons.calendar_month,
+                            ontap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Monthselection(
+                                      onTap: (value) {
+                                        _monthController.text = value[0];
+                                        monthVar = value[1];
+
+                                        if (_yearController.text.isEmpty) {
+                                          BlocProvider.of<ExpenseBloc>(context)
+                                              .add(ExpenseEvent.fetchExpense(
+                                                  monthVar,
+                                                  DateFormat('yyyy')
+                                                      .format(DateTime.now()),
+                                                  DateFormat('MMM dd yyyy')
+                                                      .format(DateTime.now()),));
+                                        } else {
+                                          BlocProvider.of<ExpenseBloc>(context)
+                                              .add(ExpenseEvent.fetchExpense(
+                                                  monthVar,
+                                                  yearVar,
+                                                  DateFormat('MMM dd yyyy')
+                                                      .format(DateTime.now()),));
+                                        }
+                                      },
+                                    );
+                                  });
+                            },
+                          ),
+                          CustomTextField(
+                            controller: _yearController,
+                            hintText: 'Select Year',
+                            widthSize: width * 0.4,
+                            readonly: true,
+                            icon: Icons.calendar_today,
+                            ontap: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Yearselection(
+                                      onTap: (value) {
+                                        _yearController.text = value.toString();
+                                        yearVar = value;
+
+                                        if (_monthController.text.isEmpty) {
+                                          BlocProvider.of<ExpenseBloc>(context)
+                                              .add(ExpenseEvent.fetchExpense(
+                                                  DateFormat('MMM')
+                                                      .format(DateTime.now()),
+                                                  yearVar,
+                                                  DateFormat('MMM dd yyyy')
+                                                      .format(DateTime.now()),));
+                                        } else {
+                                          BlocProvider.of<ExpenseBloc>(context)
+                                              .add(ExpenseEvent.fetchExpense(
+                                                  monthVar,
+                                                  yearVar,
+                                                  DateFormat('MMM dd yyyy')
+                                                      .format(DateTime.now()),));
+                                        }
+                                      },
+                                    );
+                                  });
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: height * 0.05,
+                      ),
+              categoryExpense.isEmpty ? CustomeText(text: "No Data Found", fontSize: width*0.06, color: SecondaryColor) :       SizedBox(
+                        height: 200,
+                        child: PieChart(
+                          PieChartData(
+                            sections: _getSections(categoryExpense),
+                            centerSpaceRadius: 50,
+                            borderData: FlBorderData(show: false),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: width * 0.04, top: height * 0.06),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              for (var i = 0; i < categoryExpense.length; i++)
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: width * 0.02,
+                                          right: width * 0.04),
+                                      child: Container(
+                                        width: width * 0.05,
+                                        height: width * 0.05,
+                                        color: colorsList[i],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width * 0.5,
+                                      child: CustomeText(
+                                          text: categoryExpense[i]
+                                              ['CATEG_NAME'],
+                                          fontSize: width * 0.05,
+                                          color: Colors.white),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(width * 0.02),
+                                      child: CustomeText(
+                                          text:
+                                              "₹${categoryExpense[i]['AMOUNT'].toString()}",
+                                          fontSize: width * 0.05,
+                                          color: QuaternaryColor),
+                                    )
+                                  ],
+                                )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
