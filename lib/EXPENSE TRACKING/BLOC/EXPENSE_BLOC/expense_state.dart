@@ -10,8 +10,12 @@ class ExpenseState with _$ExpenseState {
       categoryExpense,
       averageExpense,
       predictedExpense,
-      eachDayTotalExpenseList,) = ExpenseLoaded;
+      eachDayTotalExpenseList,
+      pdfLoading) = ExpenseLoaded;
   const factory ExpenseState.loading() = ExpenseLoading;
   const factory ExpenseState.error(msg) = ExpenseError;
-  const factory ExpenseState.initial() = InitialExpense;
+  factory ExpenseState.initial() {
+    return ExpenseState.loaded(
+      '', [], '', 0.0, [], 0.0, 0.0, [], false);
+  }
 }

@@ -22,10 +22,43 @@ initDatabase() async {
             'BUDGET_AMOUNT REAL, '
             'DATE TEXT, ' 
             'FOREIGN KEY(CATEG_ID) REFERENCES CATEGORY(CATEG_ID) ON DELETE CASCADE)');
+
+
       },
       onOpen: (db) async {
     
         await db.execute('PRAGMA FOREIGN_KEYS=ON');
+
+ List<Map<String, dynamic>> existingCategories = await db.query('CATEGORY');
+
+     if (existingCategories.isEmpty) {  // Insert only if table is empty
+          Batch batch = db.batch();
+          List<String> categories = [
+            'Food',
+            'Transportation',
+            'Entertainment',
+            'Shopping',
+            'Healthcare',
+            'Education',
+            'Bills & Utilities',
+            'Rent',
+            'Investments',
+            'Gifts & Donations',
+            'Travel',
+            'Personal Care',
+            'Subscriptions',
+            'Others',
+            'Savings'
+          ];
+
+          for (String category in categories) {
+            batch.rawInsert('INSERT INTO CATEGORY (CATEG_NAME) VALUES (?)', [category]);
+          }
+          await batch.commit();
+          print("Categories inserted as this is the first app launch.");
+        } else {
+          print("Categories already present.");
+        }
       },
     );
     print("DATABASE INITIALIZED...");

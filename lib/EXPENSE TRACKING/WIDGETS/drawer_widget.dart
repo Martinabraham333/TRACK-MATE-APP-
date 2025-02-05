@@ -25,10 +25,10 @@ class DrawerWidget extends StatefulWidget {
 class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   void initState() {
-    BlocProvider.of<ExpenseBloc>(context).add(ExpenseEvent.fetchExpense(
-        DateFormat('MMM').format(DateTime.now()),
-        DateFormat('yyyy').format(DateTime.now()),
-        DateFormat('MMM dd yyyy').format(DateTime.now())));
+    // BlocProvider.of<ExpenseBloc>(context).add(ExpenseEvent.fetchExpense(
+    //     DateFormat('MMM').format(DateTime.now()),
+    //     DateFormat('yyyy').format(DateTime.now()),
+    //     DateFormat('MMM dd yyyy').format(DateTime.now()),false));
 
     super.initState();
   }
@@ -108,7 +108,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     ExpenseEvent.fetchExpense(
                         DateFormat('MMM').format(DateTime.now()),
                         DateFormat('yyyy').format(DateTime.now()),
-                        DateFormat('MMM dd yyyy').format(DateTime.now())));
+                        DateFormat('MMM dd yyyy').format(DateTime.now()),
+                        false));
 
                 BlocProvider.of<CategoryBloc>(context)
                     .add(const FetchCategory());
@@ -142,9 +143,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
               monthVar = DateFormat('MMM').format(DateTime.now());
               yearVar = DateFormat('yyyy').format(DateTime.now());
-              context
-                  .read<ExpenseBloc>()
-                  .add(ExpenseEvent.filterExpense(monthVar, yearVar));
+              // context
+              //     .read<ExpenseBloc>()
+              //     .add(ExpenseEvent.filterExpense(monthVar, yearVar,false));
               showDialog(
                   context: context,
                   builder: (context) {
@@ -175,17 +176,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                             _monthController.text = value[0];
                                             monthVar = value[1];
 
-                                            if (_yearController.text.isEmpty) {
-                                              context.read<ExpenseBloc>().add(
-                                                  ExpenseEvent.filterExpense(
-                                                      monthVar,
-                                                      DateFormat('yyyy').format(
-                                                          DateTime.now())));
-                                            } else {
-                                              context.read<ExpenseBloc>().add(
-                                                  ExpenseEvent.filterExpense(
-                                                      monthVar, yearVar));
-                                            }
+                                    
                                           },
                                         );
                                       });
@@ -209,21 +200,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                             _yearController.text =
                                                 value.toString();
                                             yearVar = value;
-
-                                            if (_monthController.text.isEmpty) {
-                                              context.read<ExpenseBloc>().add(
-                                                  ExpenseEvent.filterExpense(
-                                                      DateFormat('MMM').format(
-                                                          DateTime.now()),
-                                                      yearVar));
-                                              print("if $monthVar  $yearVar");
-                                            } else {
-                                              context.read<ExpenseBloc>().add(
-                                                  ExpenseEvent.filterExpense(
-                                                      monthVar, yearVar));
-
-                                              print("else $monthVar  $yearVar");
-                                            }
                                           },
                                         );
                                       });
@@ -232,40 +208,71 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               SizedBox(
                                 height: height * 0.05,
                               ),
-                              BlocBuilder<ExpenseBloc, ExpenseState>(
-                                builder: (context, state) {
-                                  if (state is ExpenseLoaded) {
-                                    return Container(
-                                      width: width * 0.6,
-                                      child: CustomButton(
-                                          title: "Retrive",
-                                          ontap: () async {
-                                            if (_monthController
-                                                        .text.isNotEmpty &&
-                                                    state.ExpenseList
-                                                        .isNotEmpty ||
-                                                _yearController
-                                                        .text.isNotEmpty &&
-                                                    state.ExpenseList
-                                                        .isNotEmpty) {
-                                              await GenerateExpenseReport(
-                                                  state.ExpenseList,
-                                                  _monthController.text,
-                                                  _yearController.text,
-                                                  state.monthExpense,
-                                                  state.categoryExpense
-                                                  );
-                                            } else {
-                                              return alertBoxMessage(
-                                                  context, 'No Data Found');
-                                            }
-                                          },
-                                          width: 400),
-                                    );
-                                  } else {
-                                    return CircularProgressIndicator();
+                              BlocListener<ExpenseBloc, ExpenseState>(
+                                listener: (context, state) async {
+                                  if (state is ExpenseLoaded &&
+                                      state.pdfLoading == true) {
+                                    print("listener ${state.monthExpense}");
+                                    if (state.monthExpense.toString() != "0") {
+                                      print(
+                                          "MONTH EXPENSE ${state.monthExpense}");
+                                      await GenerateExpenseReport(
+                                        context,
+                                        state.ExpenseList,
+                                        _monthController.text,
+                                        _yearController.text,
+                                        state.monthExpense,
+                                        state.categoryExpense,
+                                      );
+                                    } else {
+                                      BlocProvider.of<ExpenseBloc>(context).add(
+                                        ExpenseEvent.filterExpense(
+                                            DateFormat('MMM')
+                                                .format(DateTime.now()),
+                                            DateFormat('yyyy')
+                                                .format(DateTime.now()),
+                                            false),
+                                      );
+                                      return alertBoxMessage(
+                                          context, 'No Data Found');
+                                    }
                                   }
                                 },
+                                child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                                  builder: (context, state) {
+                                    if (state is ExpenseLoaded) {
+                                      print("LOADING   ${state.pdfLoading}");
+                                      return state.pdfLoading == true
+                                          ? CircularProgressIndicator(
+                                              color: Colors.white,
+                                            )
+                                          : Container(
+                                              width: width * 0.6,
+                                              child: CustomButton(
+                                                  title: "Retrive",
+                                                  ontap: () async {
+                                                    print("RETRIEVE");
+
+                                                    print(
+                                                        "ONTAP monthvar $monthVar yearvar $yearVar");
+                                                    BlocProvider.of<
+                                                                ExpenseBloc>(
+                                                            context)
+                                                        .add(
+                                                      ExpenseEvent
+                                                          .filterExpense(
+                                                              monthVar,
+                                                              yearVar,
+                                                              true),
+                                                    );
+                                                  },
+                                                  width: 400),
+                                            );
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+                                  },
+                                ),
                               ),
                               SizedBox(
                                 height: height * 0.05,

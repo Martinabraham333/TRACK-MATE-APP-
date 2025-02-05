@@ -151,3 +151,63 @@ class CustomDateTextField extends StatelessWidget {
     );
   }
 }
+
+
+
+
+class expenseFilterTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String? hintText;
+
+  final double widthSize;
+  final bool? readonly;
+  final VoidCallback? ontap;
+  final VoidCallback? textFieldOnTap;
+  const expenseFilterTextField({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    required this.widthSize,
+
+    this.readonly,
+    this.ontap,
+    this.textFieldOnTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return Container(
+      width: widthSize,
+      height: height * 0.07,
+      decoration: BoxDecoration(
+          border: Border.all(color: SecondaryColor),
+          borderRadius: BorderRadius.circular(width * 0.03)),
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: width * 0.03,
+          ),
+          child: TextField(
+            onTap: textFieldOnTap,
+            readOnly: readonly ?? false,
+            cursorColor: SecondaryColor,
+            controller: controller,
+            style: TextStyle(
+                color: SecondaryColor,
+                fontSize: width * 0.03,
+                fontWeight: FontWeight.bold),
+            decoration: InputDecoration(
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                ),
+                hintText: hintText,
+                border: InputBorder.none,
+             ),
+          ),
+        ),
+      ),
+    );
+  }
+}

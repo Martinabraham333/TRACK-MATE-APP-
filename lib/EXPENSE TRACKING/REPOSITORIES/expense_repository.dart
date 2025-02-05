@@ -20,6 +20,24 @@ class ExpenseRepository {
     }
     return data;
   }
+  fetchExpenseByDate(date) async {
+  
+
+final resp = await db.rawQuery(
+  '''SELECT * FROM EXPENSE e 
+     INNER JOIN CATEGORY c ON e.CATEG_ID = c.CATEG_ID 
+     WHERE e.DATE = ? 
+     ORDER BY e.DATE DESC''',
+  [date] 
+);
+
+    print("Response After fetching Expense : $resp");
+    final List<ExpenseModel> data = [];
+    for (var element in resp) {
+      data.add(ExpenseModel.fromMap(element));
+    }
+    return data;
+  }
 
 
 
@@ -43,7 +61,7 @@ class ExpenseRepository {
   monthlyExpense(Month,Year) async {
     final resp = await db.rawQuery(
         'SELECT  SUM(AMOUNT)MONTH_EXPENSE FROM EXPENSE WHERE SUBSTR(DATE, 1, 3)=? AND SUBSTR(DATE, 8, 4) = ?',
-        [Month,Year]);
+        ["$Month","$Year"]);
     print("Response After fetching monthly Expense : $resp");
     return resp[0]['MONTH_EXPENSE'] ?? 0;
   }

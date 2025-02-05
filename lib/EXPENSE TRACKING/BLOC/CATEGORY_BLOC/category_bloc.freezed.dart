@@ -23,6 +23,7 @@ mixin _$CategoryEvent {
     required TResult Function(dynamic categoryId) deleteCategory,
     required TResult Function(dynamic categoryId, dynamic categoryName)
         updateCategory,
+    required TResult Function(dynamic categoryName) searchCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,6 +32,7 @@ mixin _$CategoryEvent {
     TResult? Function()? fetchCategory,
     TResult? Function(dynamic categoryId)? deleteCategory,
     TResult? Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult? Function(dynamic categoryName)? searchCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,6 +41,7 @@ mixin _$CategoryEvent {
     TResult Function()? fetchCategory,
     TResult Function(dynamic categoryId)? deleteCategory,
     TResult Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult Function(dynamic categoryName)? searchCategory,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +51,7 @@ mixin _$CategoryEvent {
     required TResult Function(FetchCategory value) fetchCategory,
     required TResult Function(DeleteCategory value) deleteCategory,
     required TResult Function(UpdateCategory value) updateCategory,
+    required TResult Function(SearchCategory value) searchCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,6 +60,7 @@ mixin _$CategoryEvent {
     TResult? Function(FetchCategory value)? fetchCategory,
     TResult? Function(DeleteCategory value)? deleteCategory,
     TResult? Function(UpdateCategory value)? updateCategory,
+    TResult? Function(SearchCategory value)? searchCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +69,7 @@ mixin _$CategoryEvent {
     TResult Function(FetchCategory value)? fetchCategory,
     TResult Function(DeleteCategory value)? deleteCategory,
     TResult Function(UpdateCategory value)? updateCategory,
+    TResult Function(SearchCategory value)? searchCategory,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -162,6 +168,7 @@ class _$AddCategoryImpl implements AddCategory {
     required TResult Function(dynamic categoryId) deleteCategory,
     required TResult Function(dynamic categoryId, dynamic categoryName)
         updateCategory,
+    required TResult Function(dynamic categoryName) searchCategory,
   }) {
     return addCategory(categoryName);
   }
@@ -173,6 +180,7 @@ class _$AddCategoryImpl implements AddCategory {
     TResult? Function()? fetchCategory,
     TResult? Function(dynamic categoryId)? deleteCategory,
     TResult? Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult? Function(dynamic categoryName)? searchCategory,
   }) {
     return addCategory?.call(categoryName);
   }
@@ -184,6 +192,7 @@ class _$AddCategoryImpl implements AddCategory {
     TResult Function()? fetchCategory,
     TResult Function(dynamic categoryId)? deleteCategory,
     TResult Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult Function(dynamic categoryName)? searchCategory,
     required TResult orElse(),
   }) {
     if (addCategory != null) {
@@ -199,6 +208,7 @@ class _$AddCategoryImpl implements AddCategory {
     required TResult Function(FetchCategory value) fetchCategory,
     required TResult Function(DeleteCategory value) deleteCategory,
     required TResult Function(UpdateCategory value) updateCategory,
+    required TResult Function(SearchCategory value) searchCategory,
   }) {
     return addCategory(this);
   }
@@ -210,6 +220,7 @@ class _$AddCategoryImpl implements AddCategory {
     TResult? Function(FetchCategory value)? fetchCategory,
     TResult? Function(DeleteCategory value)? deleteCategory,
     TResult? Function(UpdateCategory value)? updateCategory,
+    TResult? Function(SearchCategory value)? searchCategory,
   }) {
     return addCategory?.call(this);
   }
@@ -221,6 +232,7 @@ class _$AddCategoryImpl implements AddCategory {
     TResult Function(FetchCategory value)? fetchCategory,
     TResult Function(DeleteCategory value)? deleteCategory,
     TResult Function(UpdateCategory value)? updateCategory,
+    TResult Function(SearchCategory value)? searchCategory,
     required TResult orElse(),
   }) {
     if (addCategory != null) {
@@ -288,6 +300,7 @@ class _$FetchCategoryImpl implements FetchCategory {
     required TResult Function(dynamic categoryId) deleteCategory,
     required TResult Function(dynamic categoryId, dynamic categoryName)
         updateCategory,
+    required TResult Function(dynamic categoryName) searchCategory,
   }) {
     return fetchCategory();
   }
@@ -299,6 +312,7 @@ class _$FetchCategoryImpl implements FetchCategory {
     TResult? Function()? fetchCategory,
     TResult? Function(dynamic categoryId)? deleteCategory,
     TResult? Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult? Function(dynamic categoryName)? searchCategory,
   }) {
     return fetchCategory?.call();
   }
@@ -310,6 +324,7 @@ class _$FetchCategoryImpl implements FetchCategory {
     TResult Function()? fetchCategory,
     TResult Function(dynamic categoryId)? deleteCategory,
     TResult Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult Function(dynamic categoryName)? searchCategory,
     required TResult orElse(),
   }) {
     if (fetchCategory != null) {
@@ -325,6 +340,7 @@ class _$FetchCategoryImpl implements FetchCategory {
     required TResult Function(FetchCategory value) fetchCategory,
     required TResult Function(DeleteCategory value) deleteCategory,
     required TResult Function(UpdateCategory value) updateCategory,
+    required TResult Function(SearchCategory value) searchCategory,
   }) {
     return fetchCategory(this);
   }
@@ -336,6 +352,7 @@ class _$FetchCategoryImpl implements FetchCategory {
     TResult? Function(FetchCategory value)? fetchCategory,
     TResult? Function(DeleteCategory value)? deleteCategory,
     TResult? Function(UpdateCategory value)? updateCategory,
+    TResult? Function(SearchCategory value)? searchCategory,
   }) {
     return fetchCategory?.call(this);
   }
@@ -347,6 +364,7 @@ class _$FetchCategoryImpl implements FetchCategory {
     TResult Function(FetchCategory value)? fetchCategory,
     TResult Function(DeleteCategory value)? deleteCategory,
     TResult Function(UpdateCategory value)? updateCategory,
+    TResult Function(SearchCategory value)? searchCategory,
     required TResult orElse(),
   }) {
     if (fetchCategory != null) {
@@ -433,6 +451,7 @@ class _$DeleteCategoryImpl implements DeleteCategory {
     required TResult Function(dynamic categoryId) deleteCategory,
     required TResult Function(dynamic categoryId, dynamic categoryName)
         updateCategory,
+    required TResult Function(dynamic categoryName) searchCategory,
   }) {
     return deleteCategory(categoryId);
   }
@@ -444,6 +463,7 @@ class _$DeleteCategoryImpl implements DeleteCategory {
     TResult? Function()? fetchCategory,
     TResult? Function(dynamic categoryId)? deleteCategory,
     TResult? Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult? Function(dynamic categoryName)? searchCategory,
   }) {
     return deleteCategory?.call(categoryId);
   }
@@ -455,6 +475,7 @@ class _$DeleteCategoryImpl implements DeleteCategory {
     TResult Function()? fetchCategory,
     TResult Function(dynamic categoryId)? deleteCategory,
     TResult Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult Function(dynamic categoryName)? searchCategory,
     required TResult orElse(),
   }) {
     if (deleteCategory != null) {
@@ -470,6 +491,7 @@ class _$DeleteCategoryImpl implements DeleteCategory {
     required TResult Function(FetchCategory value) fetchCategory,
     required TResult Function(DeleteCategory value) deleteCategory,
     required TResult Function(UpdateCategory value) updateCategory,
+    required TResult Function(SearchCategory value) searchCategory,
   }) {
     return deleteCategory(this);
   }
@@ -481,6 +503,7 @@ class _$DeleteCategoryImpl implements DeleteCategory {
     TResult? Function(FetchCategory value)? fetchCategory,
     TResult? Function(DeleteCategory value)? deleteCategory,
     TResult? Function(UpdateCategory value)? updateCategory,
+    TResult? Function(SearchCategory value)? searchCategory,
   }) {
     return deleteCategory?.call(this);
   }
@@ -492,6 +515,7 @@ class _$DeleteCategoryImpl implements DeleteCategory {
     TResult Function(FetchCategory value)? fetchCategory,
     TResult Function(DeleteCategory value)? deleteCategory,
     TResult Function(UpdateCategory value)? updateCategory,
+    TResult Function(SearchCategory value)? searchCategory,
     required TResult orElse(),
   }) {
     if (deleteCategory != null) {
@@ -594,6 +618,7 @@ class _$UpdateCategoryImpl implements UpdateCategory {
     required TResult Function(dynamic categoryId) deleteCategory,
     required TResult Function(dynamic categoryId, dynamic categoryName)
         updateCategory,
+    required TResult Function(dynamic categoryName) searchCategory,
   }) {
     return updateCategory(categoryId, categoryName);
   }
@@ -605,6 +630,7 @@ class _$UpdateCategoryImpl implements UpdateCategory {
     TResult? Function()? fetchCategory,
     TResult? Function(dynamic categoryId)? deleteCategory,
     TResult? Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult? Function(dynamic categoryName)? searchCategory,
   }) {
     return updateCategory?.call(categoryId, categoryName);
   }
@@ -616,6 +642,7 @@ class _$UpdateCategoryImpl implements UpdateCategory {
     TResult Function()? fetchCategory,
     TResult Function(dynamic categoryId)? deleteCategory,
     TResult Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult Function(dynamic categoryName)? searchCategory,
     required TResult orElse(),
   }) {
     if (updateCategory != null) {
@@ -631,6 +658,7 @@ class _$UpdateCategoryImpl implements UpdateCategory {
     required TResult Function(FetchCategory value) fetchCategory,
     required TResult Function(DeleteCategory value) deleteCategory,
     required TResult Function(UpdateCategory value) updateCategory,
+    required TResult Function(SearchCategory value) searchCategory,
   }) {
     return updateCategory(this);
   }
@@ -642,6 +670,7 @@ class _$UpdateCategoryImpl implements UpdateCategory {
     TResult? Function(FetchCategory value)? fetchCategory,
     TResult? Function(DeleteCategory value)? deleteCategory,
     TResult? Function(UpdateCategory value)? updateCategory,
+    TResult? Function(SearchCategory value)? searchCategory,
   }) {
     return updateCategory?.call(this);
   }
@@ -653,6 +682,7 @@ class _$UpdateCategoryImpl implements UpdateCategory {
     TResult Function(FetchCategory value)? fetchCategory,
     TResult Function(DeleteCategory value)? deleteCategory,
     TResult Function(UpdateCategory value)? updateCategory,
+    TResult Function(SearchCategory value)? searchCategory,
     required TResult orElse(),
   }) {
     if (updateCategory != null) {
@@ -674,6 +704,166 @@ abstract class UpdateCategory implements CategoryEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateCategoryImplCopyWith<_$UpdateCategoryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SearchCategoryImplCopyWith<$Res> {
+  factory _$$SearchCategoryImplCopyWith(_$SearchCategoryImpl value,
+          $Res Function(_$SearchCategoryImpl) then) =
+      __$$SearchCategoryImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({dynamic categoryName});
+}
+
+/// @nodoc
+class __$$SearchCategoryImplCopyWithImpl<$Res>
+    extends _$CategoryEventCopyWithImpl<$Res, _$SearchCategoryImpl>
+    implements _$$SearchCategoryImplCopyWith<$Res> {
+  __$$SearchCategoryImplCopyWithImpl(
+      _$SearchCategoryImpl _value, $Res Function(_$SearchCategoryImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CategoryEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? categoryName = freezed,
+  }) {
+    return _then(_$SearchCategoryImpl(
+      freezed == categoryName ? _value.categoryName! : categoryName,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SearchCategoryImpl implements SearchCategory {
+  const _$SearchCategoryImpl(this.categoryName);
+
+  @override
+  final dynamic categoryName;
+
+  @override
+  String toString() {
+    return 'CategoryEvent.searchCategory(categoryName: $categoryName)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SearchCategoryImpl &&
+            const DeepCollectionEquality()
+                .equals(other.categoryName, categoryName));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(categoryName));
+
+  /// Create a copy of CategoryEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SearchCategoryImplCopyWith<_$SearchCategoryImpl> get copyWith =>
+      __$$SearchCategoryImplCopyWithImpl<_$SearchCategoryImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(dynamic categoryName) addCategory,
+    required TResult Function() fetchCategory,
+    required TResult Function(dynamic categoryId) deleteCategory,
+    required TResult Function(dynamic categoryId, dynamic categoryName)
+        updateCategory,
+    required TResult Function(dynamic categoryName) searchCategory,
+  }) {
+    return searchCategory(categoryName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(dynamic categoryName)? addCategory,
+    TResult? Function()? fetchCategory,
+    TResult? Function(dynamic categoryId)? deleteCategory,
+    TResult? Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult? Function(dynamic categoryName)? searchCategory,
+  }) {
+    return searchCategory?.call(categoryName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(dynamic categoryName)? addCategory,
+    TResult Function()? fetchCategory,
+    TResult Function(dynamic categoryId)? deleteCategory,
+    TResult Function(dynamic categoryId, dynamic categoryName)? updateCategory,
+    TResult Function(dynamic categoryName)? searchCategory,
+    required TResult orElse(),
+  }) {
+    if (searchCategory != null) {
+      return searchCategory(categoryName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AddCategory value) addCategory,
+    required TResult Function(FetchCategory value) fetchCategory,
+    required TResult Function(DeleteCategory value) deleteCategory,
+    required TResult Function(UpdateCategory value) updateCategory,
+    required TResult Function(SearchCategory value) searchCategory,
+  }) {
+    return searchCategory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AddCategory value)? addCategory,
+    TResult? Function(FetchCategory value)? fetchCategory,
+    TResult? Function(DeleteCategory value)? deleteCategory,
+    TResult? Function(UpdateCategory value)? updateCategory,
+    TResult? Function(SearchCategory value)? searchCategory,
+  }) {
+    return searchCategory?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AddCategory value)? addCategory,
+    TResult Function(FetchCategory value)? fetchCategory,
+    TResult Function(DeleteCategory value)? deleteCategory,
+    TResult Function(UpdateCategory value)? updateCategory,
+    TResult Function(SearchCategory value)? searchCategory,
+    required TResult orElse(),
+  }) {
+    if (searchCategory != null) {
+      return searchCategory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SearchCategory implements CategoryEvent {
+  const factory SearchCategory(final dynamic categoryName) =
+      _$SearchCategoryImpl;
+
+  dynamic get categoryName;
+
+  /// Create a copy of CategoryEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SearchCategoryImplCopyWith<_$SearchCategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -13,6 +13,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width1 = MediaQuery.of(context).size.width;
+    final height1 = MediaQuery.of(context).size.height;
     return Container(
         width: width,
         decoration: BoxDecoration(
@@ -21,8 +23,44 @@ class CustomButton extends StatelessWidget {
             onPressed: ontap,
             child: Text(
               title,
-              style: TextStyle(color: SecondaryColor, fontSize: width * 0.05),
+              style: TextStyle(color: SecondaryColor, fontSize: width1 * 0.04),
             )));
+  }
+}
+
+class RefreshButton extends StatelessWidget {
+  final String title;
+  final VoidCallback ontap;
+
+  const RefreshButton({
+    super.key,
+    required this.title,
+    required this.ontap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final width1 = MediaQuery.of(context).size.width;
+    final height1 = MediaQuery.of(context).size.height;
+    return TextButton(
+        onPressed: ontap,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(color: SecondaryColor, fontSize: width1 * 0.05),
+            ),
+            SizedBox(
+              width: width1 * 0.02,
+            ),
+            Icon(
+              Icons.refresh,
+              color: Colors.blue,
+              size: width1 * 0.06,
+            )
+          ],
+        ));
   }
 }
 

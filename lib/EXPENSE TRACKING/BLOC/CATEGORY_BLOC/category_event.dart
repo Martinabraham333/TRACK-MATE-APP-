@@ -6,4 +6,5 @@ class CategoryEvent with _$CategoryEvent {
   const factory CategoryEvent.fetchCategory() = FetchCategory;
   const factory CategoryEvent.deleteCategory(categoryId) = DeleteCategory;
   const factory CategoryEvent.updateCategory(categoryId,categoryName) = UpdateCategory;
+  const factory CategoryEvent.searchCategory(categoryName,) = SearchCategory;
 }

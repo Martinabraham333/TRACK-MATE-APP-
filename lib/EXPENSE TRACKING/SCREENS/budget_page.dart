@@ -16,6 +16,7 @@ import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custome_appbar.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custome_button.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custome_icons.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/drawer_widget.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/yes_or_no_widget.dart';
 
 class BudgetPage extends StatefulWidget {
   BudgetPage({super.key});
@@ -81,8 +82,7 @@ class _BudgetPageState extends State<BudgetPage> {
                         _categoryController.clear();
 
                         _budgetController.clear();
-                        BlocProvider.of<CategoryBloc>(context)
-                            .add(const FetchCategory());
+                     
                         categoryList.clear();
                         showModalBottomSheet(
                             context: context,
@@ -155,17 +155,18 @@ class _BudgetPageState extends State<BudgetPage> {
       child: Column(
         children: [
           CustomTextField(
+            readonly: true,
             controller: _categoryController,
             hintText: "Select Category",
             widthSize: width * 0.8,
             icon: Icons.category_outlined,
             ontap: () {
+               BlocProvider.of<CategoryBloc>(context).add(const FetchCategory());
               showDialog(
                   context: context,
                   builder: (context) {
                     return CustomAlertBox(
-                      width: width * 0.3,
-                      height: height * 0.3,
+                  
                       title: "Category",
                       DataList: categoryList,
                       ontap: (value) {
@@ -203,7 +204,8 @@ class _BudgetPageState extends State<BudgetPage> {
               } else if (_categoryController.text.isEmpty ||
                   _budgetController.text.isEmpty) {
                 print("All Fields Are Mandatory ");
-               return alertBoxMessage(context, 'All Fields Are Mandatory ...!');
+                return alertBoxMessage(
+                    context, 'All Fields Are Mandatory ...!');
               } else {
                 print("UPDATE STARTED... $budgetId  $categoryId");
                 BlocProvider.of<BudgetBloc>(context).add(
@@ -338,10 +340,16 @@ class _BudgetPageState extends State<BudgetPage> {
                                   BudgetList[index].val2.toString()),
                               expense: double.parse(
                                   BudgetList[index].val6.toString()),
-                              deleteOntap: () {
-                                context.read<BudgetBloc>().add(
-                                    BudgetEvent.deleteBudget(
-                                        BudgetList[index].val1));
+                              deleteOntap: () async {
+                                bool? yesOrNo = await yes_or_no_alert(
+                                    context,
+                                    "Warning !!!",
+                                    "Are you sure you want to clear all the data ?");
+                                if (yesOrNo == true) {
+                                  context.read<BudgetBloc>().add(
+                                      BudgetEvent.deleteBudget(
+                                          BudgetList[index].val1));
+                                }
                               },
                               editOntap: () {
                                 _categoryController.text =

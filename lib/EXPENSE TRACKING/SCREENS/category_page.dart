@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custome_appbar.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/custome_icons.dart';
 import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/drawer_widget.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/WIDGETS/yes_or_no_widget.dart';
 
 class CreateCategory extends StatefulWidget {
   CreateCategory({super.key});
@@ -22,6 +23,7 @@ class CreateCategory extends StatefulWidget {
 
 class _CreateCategoryState extends State<CreateCategory> {
   final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   List<CategoryModel> CategoryList = [];
   @override
@@ -64,11 +66,16 @@ class _CreateCategoryState extends State<CreateCategory> {
           },
         ),
       ),
-          drawer: DrawerWidget(),
+      drawer: DrawerWidget(),
       bottomSheet: Container(
+        width: double.infinity,
         color: PrimaryColor,
         child: Padding(
-          padding: EdgeInsets.only(bottom: height * 0.05),
+          padding: EdgeInsets.only(
+              bottom: height * 0.03,
+              top: height * 0.02,
+              left: width * 0.05,
+              right: width * 0.05),
           child: CustomTextField(
             controller: _categoryController,
             hintText: "Category...",
@@ -79,7 +86,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                 BlocProvider.of<CategoryBloc>(context)
                     .add(AddCategory(_categoryController.text));
               } else {
-                  alertBoxMessage(context, 'Enter Category Name ...!');
+                alertBoxMessage(context, 'Enter Category Name ...!');
               }
             },
           ),
@@ -99,84 +106,130 @@ class _CreateCategoryState extends State<CreateCategory> {
       child: Column(
         children: [
           CustomeAppBar(
-            title: 'Category', menuOntap: () { Scaffold.of(context).openDrawer();  },
+            title: 'Category',
+            menuOntap: () {
+              Scaffold.of(context).openDrawer();
+            },
           ),
-          category.isEmpty
-              ? Column(
-                  children: [
-                    SizedBox(
-                      height: height * 0.2,
+          Expanded(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: width * 0.05,
+                      right: width * 0.05,
+                      bottom: height * 0.03),
+                  child: TextField(
+                    onChanged: (value) {
+                      print('value $value');
+                      BlocProvider.of<CategoryBloc>(context)
+                          .add(CategoryEvent.searchCategory(value));
+                    },
+                    style: TextStyle(color: Colors.white),
+                    cursorColor: Colors.white,
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: "Search Category",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 2),
+                      ),
                     ),
-                    CustomeText(
-                      text: "No Category Added",
-                      fontSize: width * 0.05,
-                      color: SecondaryColor,
-                    ),
-                  ],
-                )
-              : Expanded(
-                  child: ListView.builder(
-                      itemCount: category.length,
-                      itemBuilder: (context, index) {
-                        TextEditingController _listViewController =
-                            TextEditingController(text: category[index].val2);
+                  ),
+                ),
+                category.isEmpty
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: height * 0.2,
+                          ),
+                          CustomeText(
+                            text: "No Category Added",
+                            fontSize: width * 0.05,
+                            color: SecondaryColor,
+                          ),
+                        ],
+                      )
+                    : Expanded(
+                        child: ListView.builder(
+                            itemCount: category.length,
+                            itemBuilder: (context, index) {
+                              TextEditingController _listViewController =
+                                  TextEditingController(
+                                      text: category[index].val2);
 
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(width * 0.1),
-                              color: TertiaryColor,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.05,
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(width * 0.1),
+                                    color: TertiaryColor,
                                   ),
-                                  SizedBox(
-                                    width: width * 0.6,
-                                    child: TextField(
-                                      cursorColor: SecondaryColor,
-                                      style: TextStyle(
-                                          color: SecondaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: width * 0.04),
-                                      controller: _listViewController,
-                                      decoration: const InputDecoration(
-                                          border: InputBorder.none),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.6,
+                                          child: TextField(
+                                            cursorColor: SecondaryColor,
+                                            style: TextStyle(
+                                                color: SecondaryColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: width * 0.04),
+                                            controller: _listViewController,
+                                            decoration: const InputDecoration(
+                                                border: InputBorder.none),
+                                          ),
+                                        ),
+                                        CustomeIcon(
+                                            onTap: () {
+                                              BlocProvider.of<CategoryBloc>(
+                                                      context)
+                                                  .add(UpdateCategory(
+                                                      category[index].val1,
+                                                      _listViewController
+                                                          .text));
+                                            },
+                                            icon: Icons.system_update_alt,
+                                            iconSize: width * 0.05,
+                                            iconColor: SecondaryColor),
+                                        SizedBox(
+                                          width: width * 0.1,
+                                        ),
+                                        CustomeIcon(
+                                            onTap: () async {
+                                              bool? yesOrNo = await yes_or_no_alert(
+                                                  context,
+                                                  "Warning !!!",
+                                                  "Are you sure you want to clear all the data ?");
+                                              if (yesOrNo == true) {
+                                                BlocProvider.of<CategoryBloc>(
+                                                        context)
+                                                    .add(DeleteCategory(
+                                                        category[index].val1));
+                                              }
+                                            },
+                                            icon: Icons.delete,
+                                            iconSize: width * 0.05,
+                                            iconColor: SecondaryColor)
+                                      ],
                                     ),
                                   ),
-                                  CustomeIcon(
-                                      onTap: () {
-                                        BlocProvider.of<CategoryBloc>(context)
-                                            .add(UpdateCategory(
-                                                category[index].val1,
-                                                _listViewController.text));
-                                      },
-                                      icon: Icons.system_update_alt,
-                                      iconSize: width * 0.05,
-                                      iconColor: SecondaryColor),
-                                  SizedBox(
-                                    width: width * 0.1,
-                                  ),
-                                  CustomeIcon(
-                                      onTap: () {
-                                        BlocProvider.of<CategoryBloc>(context)
-                                            .add(DeleteCategory(
-                                                category[index].val1));
-                                      },
-                                      icon: Icons.delete,
-                                      iconSize: width * 0.05,
-                                      iconColor: SecondaryColor)
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                ),
+                                ),
+                              );
+                            }),
+                      ),
+              ],
+            ),
+          ),
         ],
       ),
     );

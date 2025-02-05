@@ -1,14 +1,16 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'dart:io';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:open_filex/open_filex.dart';
+import 'package:track_mate/EXPENSE%20TRACKING/BLOC/EXPENSE_BLOC/expense_bloc.dart';
 
 
-GenerateExpenseReport( ExpenseList, Month, Year, TotalMonthExpense,
+GenerateExpenseReport(context, ExpenseList, Month, Year, TotalMonthExpense,
     EachCategoryExpesne) async {
   DateFormat dateFormat = DateFormat("MMM dd yyyy");
   ExpenseList.sort((a, b) {
@@ -163,6 +165,10 @@ GenerateExpenseReport( ExpenseList, Month, Year, TotalMonthExpense,
   print("PDF SAVED");
   await OpenFilex.open(filePath);
 
+  BlocProvider.of<ExpenseBloc>(context).add( ExpenseEvent.filterExpense(
+                                                        "Jan",
+                                                        2020,
+                                                        false),);
 }
 
 pdfDateText(date) {

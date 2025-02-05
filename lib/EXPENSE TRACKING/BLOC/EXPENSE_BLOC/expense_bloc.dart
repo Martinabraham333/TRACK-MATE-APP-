@@ -10,12 +10,13 @@ part 'expense_bloc.freezed.dart';
 
 class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   final ExpenseRepository repository;
-  ExpenseBloc(this.repository) : super(InitialExpense()) {
+  ExpenseBloc(this.repository) : super(ExpenseState.initial()) {
     on<AddExpense>(_addExpense);
     on<FetchExpense>(_fetchExpense);
     on<UpdateExpense>(_updateExpense);
     on<DeleteExpense>(_deleteExpense);
     on<FilterExpense>(_filterExpense);
+    on<FilterExpenseByDate>(_filterExpenseByDate);
   }
 
   _addExpense(AddExpense event, Emitter<ExpenseState> state) async {
@@ -35,50 +36,57 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     try {
       final Expensedata = await repository.fetchExpense();
       if (Expensedata.isEmpty) {
-          emit(ExpenseState.loaded(
-          '',
-          [],
-          '',
-          0.0,
-          [],
-          0.0,
-         0.0,
-       []));
-      }
-      else{
-final monthExpense = await repository.monthlyExpense(
-          DateFormat.MMM().format(DateTime.now()),
-          DateFormat('yyyy').format(DateTime.now()));
-      final dayExpense = await repository.dayExpense(event.day);
-      List categoryExpense = await calculatingTotalExpensInMonth(
-          Expensedata, monthExpense, event.FilterMonth, event.FilterYear);
+        emit(ExpenseState.loaded('', [], '', 0.0, [], 0.0, 0.0, [], false));
+      } else {
+        final monthExpense = await repository.monthlyExpense(
+            event.FilterMonth, event.FilterYear);
+        final dayExpense = await repository.dayExpense(event.day);
+        List categoryExpense = await calculatingTotalExpensInMonth(
+            Expensedata, monthExpense, event.FilterMonth, event.FilterYear);
 
-      print("categoryExpense  $categoryExpense");
-      double averageExpense = await calculatingAverageExpense(
-        Expensedata,
-        monthExpense,
-        DateFormat.MMM().format(DateTime.now()),
-      );
-      double predictedExpense =
-          await calculatingPredictedExpense(averageExpense);
+        print("categoryExpense  $categoryExpense");
+        double averageExpense = await calculatingAverageExpense(
+          Expensedata,
+          monthExpense,
+          DateFormat.MMM().format(DateTime.now()),
+        );
+        double predictedExpense =
+            await calculatingPredictedExpense(averageExpense);
+
+        List eachDayTotalExpenseList =
+            await calculatingEachDayExpense(Expensedata);
+        List ExpensedataModified =
+            await modifyingExpenseList(Expensedata, eachDayTotalExpenseList);
+        emit(ExpenseState.loaded(
+            '',
+            ExpensedataModified,
+            monthExpense,
+            dayExpense,
+            categoryExpense,
+            averageExpense,
+            predictedExpense,
+            eachDayTotalExpenseList,
+            event.pdfLoading));
+      }
+    } catch (e) {
+      emit(const ExpenseState.error('Error while fetching expense '));
+      print('Error while fetching expense /// $e');
+    }
+  }
+
+  _filterExpenseByDate(
+      FilterExpenseByDate event, Emitter<ExpenseState> state) async {
+    print("CALLING FILTER FETCH EXPENSE");
+    emit(const ExpenseState.loading());
+    try {
+      final Expensedata = await repository.fetchExpenseByDate(event.date);
 
       List eachDayTotalExpenseList =
           await calculatingEachDayExpense(Expensedata);
       List ExpensedataModified =
           await modifyingExpenseList(Expensedata, eachDayTotalExpenseList);
-      emit(ExpenseState.loaded(
-          '',
-          ExpensedataModified,
-          monthExpense,
-          dayExpense,
-          categoryExpense,
-          averageExpense,
-          predictedExpense,
-          eachDayTotalExpenseList));
-      }
-      
-
-    
+      emit(ExpenseState.loaded('', ExpensedataModified, 0.0, 0.0, [], 0.0, 0.0,
+          eachDayTotalExpenseList, false));
     } catch (e) {
       emit(const ExpenseState.error('Error while fetching expense '));
       print('Error while fetching expense /// $e');
@@ -107,20 +115,16 @@ final monthExpense = await repository.monthlyExpense(
   }
 
   _filterExpense(FilterExpense event, Emitter<ExpenseState> state) async {
+    print("BLOC FILTER EXPENSE CALLED");
     final Expensedata = await repository.fetchExpense();
 
-    final monthExpense = await repository.monthlyExpense(
-        DateFormat.MMM().format(DateTime.now()),
-        DateFormat('yyyy').format(DateTime.now()));
+    final monthExpense =
+        await repository.monthlyExpense(event.Month, event.Year);
     final dayExpense = await repository
         .dayExpense(DateFormat('MMM dd yyyy').format(DateTime.now()));
     List categoryExpense = await calculatingTotalExpensInMonth(
-        Expensedata,
-        monthExpense,
-        DateFormat('MMM').format(DateTime.now()),
-        DateFormat('yyyy').format(DateTime.now()));
+        Expensedata, monthExpense, event.Month, event.Year);
 
-    print("categoryExpense  $categoryExpense");
     double averageExpense = await calculatingAverageExpense(
       Expensedata,
       monthExpense,
@@ -137,7 +141,7 @@ final monthExpense = await repository.monthlyExpense(
               event.Month.toString() &&
           item['DATE'].toString().substring(7, 11) == event.Year.toString();
     }).toList();
-    print("ExpensedataModified after filtering   $ExpensedataModified");
+    print("BLOC FILTER EXPENSE ExpensedataModified  $ExpensedataModified");
     emit(ExpenseState.loaded(
         '',
         ExpensedataModified,
@@ -146,14 +150,16 @@ final monthExpense = await repository.monthlyExpense(
         categoryExpense,
         averageExpense,
         predictedExpense,
-        eachDayTotalExpenseList));
+        eachDayTotalExpenseList,
+        event.pdfLoading));
   }
 }
 
 calculatingTotalExpensInMonth(Expensedata, monthExpense, Month, Year) {
   // DateTime now = DateTime.now();
   // String month = DateFormat('MMM').format(now);
-
+  print(
+      "EXPENSE OF EACH CATEGORY Month $Month  Year  $Year  monthExpense $monthExpense");
   List categoryExpense = [];
   List categories = [];
   List TempcategoriesUniq = [];
@@ -171,33 +177,24 @@ calculatingTotalExpensInMonth(Expensedata, monthExpense, Month, Year) {
   // CONVERTING CATEGORY ID LIST TO UNIQ LIST PREVENTING DUPLICATE VALUE
   TempcategoriesUniq = categories.toSet().toList();
   // THIS IS FOR CREATING LIST OF LIST THAT CONTAINS CATEGORY ID AND CATEGORY NAME
-  print("TempcategoriesUniq $TempcategoriesUniq");
-  print("categories $categories");
+
   for (var element in TempcategoriesUniq) {
     List SplitedList = element.split('*');
     categoriesUniq.add(SplitedList);
   }
   // FOR LOOP THROUGH UNIQ CATEGORY ID TO CALCULATE TOTAL EXPENSE OF EACH CATEGORY
   List FilteredList = [];
-  print("Month $Month Year $Year");
 
   for (var item in Expensedata) {
-    print(
-        "Month ${item.val3.toString().substring(0, 3)} Year ${item.val3.toString().substring(7, 11)}");
     if (item.val3.toString().substring(0, 3) == Month.toString() &&
         item.val3.toString().substring(7, 11) == Year.toString()) {
       FilteredList.add(item);
     }
   }
-  print("FilteredList in category expense $FilteredList");
-  print("categoriesUniq $categoriesUniq");
 
   for (var category in categoriesUniq) {
-    print("FIRST FOR LOOP");
     double totalCategExpense = 0.0;
     for (var expense in FilteredList) {
-      print("SECOND FOR LOOP");
-      print("for loop ${category[0]} == ${expense.val4}");
       if (category[0] == expense.val4) {
         // IF CATEGORY ID EQUALS CALCULATE TOTAL EXPENSE
         totalCategExpense = totalCategExpense + double.parse(expense.val2);
@@ -213,7 +210,7 @@ calculatingTotalExpensInMonth(Expensedata, monthExpense, Month, Year) {
       'PERCENTAGE': percentage
     });
   }
-
+  print("EXPENSE OF EACH CATEGORY $categoryExpense");
   return categoryExpense;
 }
 
@@ -244,7 +241,6 @@ calculatingAverageExpense(Expensedata, monthExpense, Month) {
       numberOfDays = numberOfDays + 1;
     }
   }
-  print("NUMBER OF DAYS $numberOfDays");
 
   averageExpense = monthExpense / numberOfDays;
   return averageExpense;
@@ -255,11 +251,10 @@ calculatingPredictedExpense(averageExpense) {
   DateTime startOfToday = DateTime(today.year, today.month, today.day);
   // Get the last day of the current month
   DateTime endOfMonth = DateTime(today.year, today.month + 1, 0);
-  print("endOfMonth  $endOfMonth");
-  print("startOfToday  $startOfToday");
+
   // Calculate the difference in days
   int daysDifference = endOfMonth.difference(startOfToday).inDays;
-  print("daysDifference  $daysDifference");
+
   return averageExpense * daysDifference;
 }
 
@@ -271,7 +266,6 @@ calculatingEachDayExpense(Expensedata) {
     eachDayList.add(element.val3);
   }
   eachDayListUniq = eachDayList.toSet().toList();
-  print("eachDayListUniq  $eachDayListUniq");
 
   for (var date in eachDayListUniq) {
     double totalDayExpense = 0.0;
