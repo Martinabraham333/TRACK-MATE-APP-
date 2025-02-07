@@ -51,7 +51,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
           DateFormat.MMM().format(DateTime.now()),
         );
         double predictedExpense =
-            await calculatingPredictedExpense(averageExpense);
+            await calculatingPredictedExpense(averageExpense, Expensedata);
 
         List eachDayTotalExpenseList =
             await calculatingEachDayExpense(Expensedata);
@@ -130,9 +130,12 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       monthExpense,
       DateFormat.MMM().format(DateTime.now()),
     );
-    double predictedExpense = await calculatingPredictedExpense(averageExpense);
+    double predictedExpense =
+        await calculatingPredictedExpense(averageExpense, Expensedata);
 
-    List eachDayTotalExpenseList = await calculatingEachDayExpense(Expensedata);
+    List eachDayTotalExpenseList = await calculatingEachDayExpense(
+      Expensedata,
+    );
     List ExpensedataModified =
         await modifyingExpenseList(Expensedata, eachDayTotalExpenseList);
 
@@ -224,20 +227,16 @@ calculatingAverageExpense(Expensedata, monthExpense, Month) {
       FilteredList.add(item);
     }
   }
-  // print(
-  //     "FilteredList  $FilteredList  $Month ${Expensedata[0].val3.toString().substring(7, 11)}");
+ 
   double averageExpense = 0.0;
   int numberOfDays = 0;
-  // WE TAKE CURRENT INDEX AND PREVIOUS INDEX FOR CALCULATING NUMBER OF DAYS
-  // NUMBER OF DAYS SHOULD BE UNIQUE AND IT SHOULD NOT REPEAT
-  // IN FOR LOOP WE CHCEK CURRENT DATE AND PREVIOUS DATE IS SAME ?
-
+  
   for (var i = 0; i < FilteredList.length; i++) {
     if (i == 0) {
-      // NUMBER OF DAYS INCREASE IF IT IS FIRST DATE IN EXPENSE LIST
+      
       numberOfDays = numberOfDays + 1;
     } else if (FilteredList[i].val3 != FilteredList[i - 1].val3) {
-      // IF CURRENT DATE IF NOT SAME AS PREVIOUS DATE NUMBER OF DAYS INCREASE
+    
       numberOfDays = numberOfDays + 1;
     }
   }
@@ -246,19 +245,24 @@ calculatingAverageExpense(Expensedata, monthExpense, Month) {
   return averageExpense;
 }
 
-calculatingPredictedExpense(averageExpense) {
+calculatingPredictedExpense(averageExpense, Expensedata) {
   DateTime today = DateTime.now();
-  DateTime startOfToday = DateTime(today.year, today.month, today.day);
-  // Get the last day of the current month
+
+  String dateString = Expensedata[Expensedata.length - 1].val3;
+  DateTime startDate = DateFormat("MMM dd yyyy").parse(dateString);
+  print(
+      "startDate $startDate      ${Expensedata[Expensedata.length - 1].val3}");
   DateTime endOfMonth = DateTime(today.year, today.month + 1, 0);
-
+  print("endOfMonth $endOfMonth");
   // Calculate the difference in days
-  int daysDifference = endOfMonth.difference(startOfToday).inDays;
-
-  return averageExpense * daysDifference;
+  int daysDifference = endOfMonth.difference(startDate).inDays;
+  print("daysDifference  ${(daysDifference +1)}");
+  return averageExpense * (daysDifference +1);
 }
 
-calculatingEachDayExpense(Expensedata) {
+calculatingEachDayExpense(
+  Expensedata,
+) {
   List eachDayTotalExpenseList = [];
   List eachDayList = [];
   List eachDayListUniq = [];

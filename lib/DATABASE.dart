@@ -43,12 +43,13 @@ initDatabase() async {
             'Bills & Utilities',
             'Rent',
             'Investments',
-            'Gifts & Donations',
+        
             'Travel',
             'Personal Care',
             'Subscriptions',
             'Others',
-            'Savings'
+            'Savings',
+            'No Expense Added'
           ];
 
           for (String category in categories) {

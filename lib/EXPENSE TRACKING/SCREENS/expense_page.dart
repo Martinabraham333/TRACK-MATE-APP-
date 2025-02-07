@@ -290,56 +290,53 @@ class _ExpensePageState extends State<ExpensePage> {
         // eachDayTotalExpense.isEmpty
         //     ? Container()
         //     :
-            
-            _dateFilterController.text.isNotEmpty ? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              
-              children: [
-             
-            Padding(
-              padding:  EdgeInsets.only(left: width*0.04),
-              child: RefreshButton(
-                            title: "Refresh",
-                            ontap: () {
-                              BlocProvider.of<ExpenseBloc>(context).add(
-                                  ExpenseEvent.filterExpense(
-                                      DateFormat('MMM').format(DateTime.now()),
-                                      DateFormat('yyyy').format(DateTime.now()),
-                                      false));
-              
-                              _monthController.text =
-                                  DateFormat('MMMM').format(DateTime.now());
-                              _yearController.text =
-                                  DateFormat('yyyy').format(DateTime.now());
-                              monthVar = DateFormat('MMM').format(DateTime.now());
-                              yearVar = DateFormat('yyyy').format(DateTime.now());
-              
-                              _dateFilterController.clear();
-                            },
-                        
-                          ),
-            ),
 
+        _dateFilterController.text.isNotEmpty
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: width * 0.04),
+                    child: RefreshButton(
+                      title: "Refresh",
+                      ontap: () {
+                        BlocProvider.of<ExpenseBloc>(context).add(
+                            ExpenseEvent.filterExpense(
+                                DateFormat('MMM').format(DateTime.now()),
+                                DateFormat('yyyy').format(DateTime.now()),
+                                false));
 
-                           Padding(
-                               padding:  EdgeInsets.only(right: width*0.04),
-                             child: expenseFilterTextField(
-                                                 controller: _dateFilterController,
-                                                 hintText: 'Filter By Date',
-                                                 widthSize: width * 0.3,
-                                                 readonly: true,
-                                                 textFieldOnTap: () async {
-                                                   DateTime? selectDate = await showDatePicker(
-                                                     context: context,
-                                                     initialDate: DateTime.now(),
-                                                     firstDate: DateTime(2000),
-                                                     lastDate: DateTime(2100),
-                                                     builder: (BuildContext context, Widget? child) {
-                                                       return Theme(
+                        _monthController.text =
+                            DateFormat('MMMM').format(DateTime.now());
+                        _yearController.text =
+                            DateFormat('yyyy').format(DateTime.now());
+                        monthVar = DateFormat('MMM').format(DateTime.now());
+                        yearVar = DateFormat('yyyy').format(DateTime.now());
+
+                        _dateFilterController.clear();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: width * 0.04),
+                    child: expenseFilterTextField(
+                      controller: _dateFilterController,
+                      hintText: 'Filter By Date',
+                      widthSize: width * 0.3,
+                      readonly: true,
+                      textFieldOnTap: () async {
+                        DateTime? selectDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                          builder: (BuildContext context, Widget? child) {
+                            return Theme(
                               data: ThemeData.light().copyWith(
                                 dialogBackgroundColor: TertiaryColor,
                                 textTheme: const TextTheme(
-                                  headlineMedium: TextStyle(color: Colors.white),
+                                  headlineMedium:
+                                      TextStyle(color: Colors.white),
                                 ),
                                 colorScheme: ColorScheme.light(
                                   primary: Colors.blue,
@@ -349,162 +346,164 @@ class _ExpensePageState extends State<ExpensePage> {
                                 ),
                               ),
                               child: child!,
-                                                       );
-                                                     },
-                                                   );
-                             
-                                                   if (selectDate != null) {
-                                                     String FormatedDate = DateFormat('MMM dd yyyy')
+                            );
+                          },
+                        );
+
+                        if (selectDate != null) {
+                          String FormatedDate = DateFormat('MMM dd yyyy')
                               .format(selectDate)
                               .toString();
-                                                     _dateFilterController.text = FormatedDate.toString();
-                             
-                                                     BlocProvider.of<ExpenseBloc>(context).add(
+                          _dateFilterController.text = FormatedDate.toString();
+
+                          BlocProvider.of<ExpenseBloc>(context).add(
                               ExpenseEvent.filterExpenseByDate(
                                   _dateFilterController.text));
-                             
-                                                 
-                                                   }
-                                                 },
-                                               ),
-                           ),
-            ],)  :
-            
-            
-             Row(
-                mainAxisAlignment:   MainAxisAlignment.spaceAround ,
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-             
-                       expenseFilterTextField(
-                          controller: _monthController,
-                          hintText: 'Select Month',
-                          widthSize: width * 0.3,
-                          readonly: true,
-                          textFieldOnTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Monthselection(
-                                    onTap: (value) {
-                                      _monthController.text = value[0];
-                                      monthVar = value[1];
-
-                                      if (_yearController.text.isEmpty) {
-                                        context.read<ExpenseBloc>().add(
-                                            ExpenseEvent.filterExpense(
-                                                monthVar,
-                                                DateFormat('yyyy')
-                                                    .format(DateTime.now()),
-                                                false));
-                                      } else {
-                                        context.read<ExpenseBloc>().add(
-                                            ExpenseEvent.filterExpense(
-                                                monthVar, yearVar, false));
-                                      }
-                                    },
-                                  );
-                                });
-                          },
-                        ),
                   expenseFilterTextField(
-                          controller: _yearController,
-                          hintText: 'Select Year',
-                          widthSize: width * 0.2,
-                          readonly: true,
-                          textFieldOnTap: () async {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Yearselection(
-                                    onTap: (value) {
-                                      _yearController.text = value.toString();
-                                      yearVar = value;
-
-                                      if (_monthController.text.isEmpty) {
-                                        context.read<ExpenseBloc>().add(
-                                            ExpenseEvent.filterExpense(
-                                                DateFormat('MMM')
-                                                    .format(DateTime.now()),
-                                                yearVar,
-                                                false));
-                                      } else {
-                                        context.read<ExpenseBloc>().add(
-                                            ExpenseEvent.filterExpense(
-                                                monthVar, yearVar, false));
-                                      }
-                                    },
-                                  );
-                                });
-                          },
-                        ),
-        _monthController.text==DateFormat('MMMM'). format(DateTime.now()) &&   _yearController.text==DateFormat('yyyy'). format(DateTime.now())  ?      expenseFilterTextField(
-                    controller: _dateFilterController,
-                    hintText: 'Filter By Date',
+                    controller: _monthController,
+                    hintText: 'Select Month',
                     widthSize: width * 0.3,
                     readonly: true,
-                    textFieldOnTap: () async {
-                      DateTime? selectDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                        builder: (BuildContext context, Widget? child) {
-                          return Theme(
-                            data: ThemeData.light().copyWith(
-                              dialogBackgroundColor: TertiaryColor,
-                              textTheme: const TextTheme(
-                                headlineMedium: TextStyle(color: Colors.white),
-                              ),
-                              colorScheme: ColorScheme.light(
-                                primary: Colors.blue,
-                                onPrimary: Colors.white,
-                                surface: TertiaryColor,
-                                onSurface: Colors.white,
-                              ),
-                            ),
-                            child: child!,
-                          );
-                        },
-                      );
+                    textFieldOnTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Monthselection(
+                              onTap: (value) {
+                                _monthController.text = value[0];
+                                monthVar = value[1];
 
-                      if (selectDate != null) {
-                        String FormatedDate = DateFormat('MMM dd yyyy')
-                            .format(selectDate)
-                            .toString();
-                        _dateFilterController.text = FormatedDate.toString();
-
-                        BlocProvider.of<ExpenseBloc>(context).add(
-                            ExpenseEvent.filterExpenseByDate(
-                                _dateFilterController.text));
-
-                        // _monthController.text=DateFormat('MMMM')
-                        //     .format(selectDate)
-                        //     .toString();
-                        // _yearController.text=DateFormat('yyyy')
-                        //     .format(selectDate)
-                        //     .toString();
-                      }
+                                if (_yearController.text.isEmpty) {
+                                  context.read<ExpenseBloc>().add(
+                                      ExpenseEvent.filterExpense(
+                                          monthVar,
+                                          DateFormat('yyyy')
+                                              .format(DateTime.now()),
+                                          false));
+                                } else {
+                                  context.read<ExpenseBloc>().add(
+                                      ExpenseEvent.filterExpense(
+                                          monthVar, yearVar, false));
+                                }
+                              },
+                            );
+                          });
                     },
-                  ):RefreshButton(
-                            title: "Refresh",
-                            ontap: () {
+                  ),
+                  expenseFilterTextField(
+                    controller: _yearController,
+                    hintText: 'Select Year',
+                    widthSize: width * 0.2,
+                    readonly: true,
+                    textFieldOnTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Yearselection(
+                              onTap: (value) {
+                                _yearController.text = value.toString();
+                                yearVar = value;
+
+                                if (_monthController.text.isEmpty) {
+                                  context.read<ExpenseBloc>().add(
+                                      ExpenseEvent.filterExpense(
+                                          DateFormat('MMM')
+                                              .format(DateTime.now()),
+                                          yearVar,
+                                          false));
+                                } else {
+                                  context.read<ExpenseBloc>().add(
+                                      ExpenseEvent.filterExpense(
+                                          monthVar, yearVar, false));
+                                }
+                              },
+                            );
+                          });
+                    },
+                  ),
+                  _monthController.text ==
+                              DateFormat('MMMM').format(DateTime.now()) &&
+                          _yearController.text ==
+                              DateFormat('yyyy').format(DateTime.now())
+                      ? expenseFilterTextField(
+                          controller: _dateFilterController,
+                          hintText: 'Filter By Date',
+                          widthSize: width * 0.3,
+                          readonly: true,
+                          textFieldOnTap: () async {
+                            DateTime? selectDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2100),
+                              builder: (BuildContext context, Widget? child) {
+                                return Theme(
+                                  data: ThemeData.light().copyWith(
+                                    dialogBackgroundColor: TertiaryColor,
+                                    textTheme: const TextTheme(
+                                      headlineMedium:
+                                          TextStyle(color: Colors.white),
+                                    ),
+                                    colorScheme: ColorScheme.light(
+                                      primary: Colors.blue,
+                                      onPrimary: Colors.white,
+                                      surface: TertiaryColor,
+                                      onSurface: Colors.white,
+                                    ),
+                                  ),
+                                  child: child!,
+                                );
+                              },
+                            );
+
+                            if (selectDate != null) {
+                              String FormatedDate = DateFormat('MMM dd yyyy')
+                                  .format(selectDate)
+                                  .toString();
+                              _dateFilterController.text =
+                                  FormatedDate.toString();
+
                               BlocProvider.of<ExpenseBloc>(context).add(
-                                  ExpenseEvent.filterExpense(
-                                      DateFormat('MMM').format(DateTime.now()),
-                                      DateFormat('yyyy').format(DateTime.now()),
-                                      false));
-              
-                              _monthController.text =
-                                  DateFormat('MMMM').format(DateTime.now());
-                              _yearController.text =
-                                  DateFormat('yyyy').format(DateTime.now());
-                              monthVar = DateFormat('MMM').format(DateTime.now());
-                              yearVar = DateFormat('yyyy').format(DateTime.now());
-              
-                              _dateFilterController.clear();
-                            },
-                        
-                          ),
+                                  ExpenseEvent.filterExpenseByDate(
+                                      _dateFilterController.text));
+
+                              // _monthController.text=DateFormat('MMMM')
+                              //     .format(selectDate)
+                              //     .toString();
+                              // _yearController.text=DateFormat('yyyy')
+                              //     .format(selectDate)
+                              //     .toString();
+                            }
+                          },
+                        )
+                      : RefreshButton(
+                          title: "Refresh",
+                          ontap: () {
+                            BlocProvider.of<ExpenseBloc>(context).add(
+                                ExpenseEvent.filterExpense(
+                                    DateFormat('MMM').format(DateTime.now()),
+                                    DateFormat('yyyy').format(DateTime.now()),
+                                    false));
+
+                            _monthController.text =
+                                DateFormat('MMMM').format(DateTime.now());
+                            _yearController.text =
+                                DateFormat('yyyy').format(DateTime.now());
+                            monthVar = DateFormat('MMM').format(DateTime.now());
+                            yearVar = DateFormat('yyyy').format(DateTime.now());
+
+                            _dateFilterController.clear();
+                          },
+                        ),
                 ],
               ),
         ExpensedataModified.isEmpty
